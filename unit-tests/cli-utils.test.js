@@ -353,5 +353,40 @@ describe("cli utils", () => {
         "it should"
       );
     });
+    it("should run correctly with the icse cli checkglass data", () => {
+      let tags = {
+        time: ["-t", "--time"],
+        api_key: ["-a", "--apikey"],
+        justification: ["-j", "--justification"],
+      };
+      // flags for break glass
+      let action = {
+        requiredFlags: ["api_key", "justification"],
+        optionalFlags: [
+          {
+            name: "time",
+            noMatchingValue: false
+          },
+        ],
+      };
+      let actualData = utils.flagValues("breakglass", action, tags, ...[
+        `-t`,
+        `8`,
+        `-a`,
+        `API_KEY`,
+        `-j`,
+        "justification value trails at the end of the line still subject to 30 character minimum",
+      ]);
+      assert.deepEqual(
+        actualData,
+        {
+          api_key: "API_KEY",
+          time: "8",
+          justification:
+            "justification value trails at the end of the line still subject to 30 character minimum",
+        },
+        "it should"
+      );
+    });
   });
 });
