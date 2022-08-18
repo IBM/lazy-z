@@ -11,12 +11,14 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [containsKeys](#containskeys)
    - [distinct](#distinct)
    - [eachKey](#eachkey)
+   - [isEmpty](#isempty)
    - [keys](#keys)
    - [prettyJSON](#prettyjson)
 3. [Value Test Methods](#value-test-methods)
    - [arrTypeCheck](#arrtypecheck)
    - [containsAny](#containsany)
    - [containsCheck](#containscheck)
+   - [emptyCheck](#emptycheck)
    - [getFunctionParams](#getfunctionparams)
    - [getType](#getType)
    - [isFunction](#isfunction)
@@ -30,6 +32,8 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [matchLength](#matchlength)
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
+5. [Object Methods](#object-methods)
+   - [transpose](#transpose)
 5. [Encoding Methods](#encoding-methods)
    - [hclEncode](#hclEncode)
 6. [CLI Utility Methods](#cli-utility-methods)
@@ -119,6 +123,19 @@ eachKey({ one: 1, two: 2 }, (key, index) => {
 });
 ```
 
+### isEmpty
+
+Test if an array has no entries
+
+```js
+const { isEmpty } = require("lazy-z")
+
+let emptyArray = []
+
+isEmpty(emptyArray) // returns true
+isEmpty(["item"])   // returns false
+```
+
 ### keys
 
 Get the keys of an object
@@ -195,8 +212,22 @@ containsCheck(
   "should contain the number 4",
   ["frog", "string", "egg"],
   "4"
-) // throws
+) 
+// throws
 `should contain the number 4 got ["frog", "string", "egg"]`;
+```
+
+### emptyCheck
+
+Test to see if an array is empty. Throw an error if it is.
+
+```js
+const { emptyCheck } = require("lazy-z");
+
+emptyCheck("array should not be empty", [])
+// throws
+`array should not be empty`
+
 ```
 
 ### getFunctionParams
@@ -390,6 +421,34 @@ stringify(
   else return \`\${data}\`;
 }`;
 ```
+
+---
+
+## Object Methods
+
+Methods for manipulating objects
+
+### transpose
+
+Set keys from one object to another in place
+
+```js
+const {transpose } = require("lazy-z")
+
+let destination = { one: 1 };
+let source = { two: 2 };
+transpose(source, destination);
+
+// all keys from the source object are added to the destination
+// new value for destination object
+{
+  one: 1,
+  two: 2
+}
+
+```
+
+---
 
 ## Encoding Methods
 
@@ -707,7 +766,8 @@ File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 --------------|---------|----------|---------|---------|-------------------
 All files     |     100 |      100 |     100 |     100 | 🏆                 
  cli-utils.js |     100 |      100 |     100 |     100 | 🏆                   
- encode.js    |     100 |      100 |     100 |     100 | 🏆                   
+ encode.js    |     100 |      100 |     100 |     100 | 🏆   
+ objects.js   |     100 |      100 |     100 |     100 | 🏆              
  shortcuts.js |     100 |      100 |     100 |     100 | 🏆                   
  strings.js   |     100 |      100 |     100 |     100 | 🏆                   
  values.js    |     100 |      100 |     100 |     100 | 🏆                   
