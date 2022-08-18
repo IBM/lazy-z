@@ -3,5 +3,6 @@ module.exports = {
   ...require("./lib/shortcuts"),
   ...require("./lib/values"),
   ...require("./lib/strings"),
-  ...require("./lib/encode")
+  ...require("./lib/encode"),
+  ...require("./lib/objects")
 };

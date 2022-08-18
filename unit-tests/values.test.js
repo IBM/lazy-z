@@ -154,4 +154,18 @@ describe("values", () => {
       );
     });
   });
+  describe("emptyCheck", () => {
+    it("should throw an error if an array is empty", () => {
+      let task = () => {
+        values.emptyCheck("why", [])
+      }
+      assert.throws(task, "why")
+    })
+    it("should not throw if the array has an entry", () => {
+      let task = () => {
+        values.emptyCheck("why", ["why"])
+      }
+      assert.doesNotThrow(task, "should not throw")
+    })
+  })
 });

@@ -68,4 +68,10 @@ describe("shortcuts", () => {
       assert.deepEqual(actualData, expectedData, "it should return array");
     });
   });
+  describe("isEmpty", () => {
+    let isEmpty = shortcuts.isEmpty;
+    it("should return false if not empty", () => {
+      assert.deepEqual(isEmpty(["test"]), false, "should return correct keys");
+    });
+  });
 });
