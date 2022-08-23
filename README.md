@@ -11,9 +11,15 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [containsKeys](#containskeys)
    - [distinct](#distinct)
    - [eachKey](#eachkey)
+   - [isBoolean](#isBoolean)
    - [isEmpty](#isempty)
+   - [isIpv4CidrOrAddress](#isIpv4CidrOrAddress)
+   - [isString](#isString)
    - [keys](#keys)
+   - [keyValueType](#keyValueType)
+   - [objectAtFirstKey](#objectAtFirstKey)
    - [prettyJSON](#prettyjson)
+   - [validIpv4Test](#validIpv4Test)
 3. [Value Test Methods](#value-test-methods)
    - [arrTypeCheck](#arrtypecheck)
    - [containsAny](#containsany)
@@ -33,6 +39,13 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
 5. [Object Methods](#object-methods)
+   - [arraySplatIndex](#arraySplatIndex)
+   - [carve](#carve)
+   - [duplicateKeyTest](#duplicateKeyTest)
+   - [getObjectFromArray](#getObjectFromArray)
+   - [hasDuplicateKeys](#hasDuplicateKeys)
+   - [splat](#splat)
+   - [spreadValues](#spreadValues)
    - [transpose](#transpose)
 5. [Encoding Methods](#encoding-methods)
    - [hclEncode](#hclEncode)
@@ -123,6 +136,17 @@ eachKey({ one: 1, two: 2 }, (key, index) => {
 });
 ```
 
+### isBoolean
+
+Test if a value is boolean
+
+```js
+const { isBoolean } = require("lazy-z")
+
+isBoolean(true)  // returns true
+isBoolean(["item"])  // returns false
+```
+
 ### isEmpty
 
 Test if an array has no entries
@@ -136,6 +160,28 @@ isEmpty(emptyArray) // returns true
 isEmpty(["item"])   // returns false
 ```
 
+### isIpv4CidrOrAddress
+
+Test if a value is a valid IPV4 CIDR block or address.
+
+```js
+const { isIpv4CidrOrAddress } = require("lazy-z");
+
+isIpv4CidrOrAddress("8.8.8.8")  // returns true
+isIpv4CidrOrAddress("8.8.8.8/8")  // returns true
+isIpv4CidrOrAddress(["item"])  // returns false
+```
+
+### isString
+
+Test if a value is a string
+
+```js
+const { isString } = require("lazy-z")
+
+isString("string")  // returns true
+isString(["item"])  // returns false
+```
 ### keys
 
 Get the keys of an object
@@ -148,6 +194,38 @@ keys({ one: 1, two: 2 })[
 ];
 ```
 
+### keyValueType
+
+Get the type of an object property by key name
+
+```js
+const { keyValueType } = require("lazy-z");
+
+keyValueType({one: 1}, "one");
+// returns
+"number"
+```
+
+### objectAtFirstKey
+
+Shortcut to get the nested object from the first key of the parent
+
+```js
+const {objectAtFirstKey} = require("lazy-z");
+
+let obj = {
+  sub_obj: {
+    one: "one"
+  }
+}
+
+objectAtFirstKey(obj)
+// returns
+{
+  one: "one"
+}
+
+```
 ### prettyJSON
 
 Shortcut for JSON.stringify(obj, null, 2)
@@ -162,6 +240,19 @@ prettyJSON({ one: 1, two: 2 });
     "one" : 1,
     "two" : 2,
 }`;
+```
+
+### validIpv4Test
+
+Test if a value is a valid IPV4 CIDR block or IP address. Throw an error if it is not.
+
+```js
+const { validIpv4Test } = require("lazy-z");
+
+validIpv4Test("test", "honk"); 
+
+// throws
+"test expected valid ipv4 address or CIDR block, got honk"
 ```
 
 ---
@@ -426,14 +517,195 @@ stringify(
 
 ## Object Methods
 
-Methods for manipulating objects
+Methods for manipulating objects and arrays of objects
+
+### arraySplatIndex
+
+Get the index of an object from an array of objects with a specified key value.
+
+```js
+const { arraySplatIndex } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+arraySplatIndex(arr, "name", "todd")
+// returns 
+0
+```
+
+### carve
+
+Remove an object from an array of objects with a specific key value.
+
+```js
+const { carve } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+carve(arr, "name", "todd")
+// returns 
+[
+  {
+    name: "todd"
+  }
+]
+// array value is now 
+[
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+```
+
+### duplicateKeyTest
+
+Test to see if an array of objects has any values with a duplicate key.
+
+```js
+const { duplicateKeyTest } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+duplicateKeyTest("test", arr, "name", "todd")
+// throws
+"test expected no duplicate keys for name. Duplicate value: todd"
+
+```
+
+
+### getObjectFromArray
+
+Get an object from an array of objects with a specific key value
+
+
+```js
+const { getObjectFromArray } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+getObjectFromArray(arr, "name", "todd")
+// returns 
+{
+  name: "todd"
+}
+```
+
+### hasDuplicateKeys
+
+Check to see if an object with a key value exists in an array of objects
+
+```js
+const { hasDuplicateKeys } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+hasDuplicateKeys(arr, "name", "todd") // returns true
+hasDuplicateKeys(arr, "name", "ham") // returns false
+```
+
+### splat
+
+Get all values from a specified object key in an array of objects.
+
+```js
+const { splat } = require("lazy-z")
+
+let arr = [
+  {
+    name: "todd"
+  },
+  {
+    name: "egg"
+  },
+  {
+    name: "frog"
+  }
+]
+
+splat(arr, "name")
+
+// returns
+["todd", "egg", "frog"]
+
+```
+
+### spreadValues
+
+Transform all key values from an object into an array.
+
+```js
+const { spreadValues } = require("lazy-z")
+
+spreadValues({
+  one: 1,
+  two: 2,
+  three: 3
+})
+
+// returns
+[1,2,3]
+
+```
 
 ### transpose
 
 Set keys from one object to another in place
 
 ```js
-const {transpose } = require("lazy-z")
+const { transpose } = require("lazy-z")
 
 let destination = { one: 1 };
 let source = { two: 2 };

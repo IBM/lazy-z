@@ -74,4 +74,71 @@ describe("shortcuts", () => {
       assert.deepEqual(isEmpty(["test"]), false, "should return correct keys");
     });
   });
+  describe("objectAtFirstKey", () => {
+    it("should return the object", () => {
+      let actualData = shortcuts.objectAtFirstKey({
+        sub_obj: {
+          one: "one",
+        },
+      });
+      assert.deepEqual(actualData, { one: "one" }, "it should return object");
+    });
+  });
+  describe("keyValueType", () => {
+    it("should return the object key type", () => {
+      let actualData = shortcuts.keyValueType({
+        sub_obj: {
+          one: "one",
+        },
+      }, "sub_obj");
+      assert.deepEqual(actualData, "object", "it should return object");
+    });
+  });
+  describe("isString", () => {
+    let isString = shortcuts.isString;
+    it("should return true if string", () => {
+      assert.isTrue(isString("string"))
+    })
+    it("should return false if not string", () => {
+      assert.isFalse(isString())
+    })
+  })
+  describe("isBoolean", () => {
+    let isBoolean = shortcuts.isBoolean;
+    it("should return true if boolean", () => {
+      assert.isTrue(isBoolean(true))
+    })
+    it("should return false if not string", () => {
+      assert.isFalse(isBoolean())
+    })
+  })
+  describe("isIpv4CidrOrAddress", () => {
+    let isIpv4CidrOrAddress = shortcuts.isIpv4CidrOrAddress;
+    it("should return true if ipv4 cidr block", () => {
+      let actualData = isIpv4CidrOrAddress("10.0.0.0/8");
+      assert.isTrue(actualData, "it should be true");
+    });
+    it("should return false if invalid ipv4 cidr block", () => {
+      let actualData = isIpv4CidrOrAddress("310.0.0.0/8");
+      assert.isFalse(actualData, "it should be false");
+    });
+  });
+  describe("validIpv4Test", () => {
+    let validIpv4Test = shortcuts.validIpv4Test;
+    it("should throw an error if address is invalid", () => {
+      let task = () => {
+        validIpv4Test("test", "honk");
+      };
+      assert.throws(
+        task,
+        "test expected valid ipv4 address or CIDR block, got honk"
+      );
+    });
+    it("should not throw an error if address is vaid", () => {
+      let task = () => {
+        validIpv4Test("test", "1.2.3.4/5");
+      };
+      assert.doesNotThrow(task, "no throw");
+    });
+  });
 });
