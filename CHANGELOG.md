@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
     - `duplicateKeyTest`
     - `arraySplatIndex`
     - `getObjectFromArray`
+    - `carve`
 
 ## [1.0.4] - 2022-8-18
 
