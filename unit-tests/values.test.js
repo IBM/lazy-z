@@ -50,21 +50,11 @@ describe("values", () => {
   describe("paramTest", () => {
     it("should throw the correct error when expecting an array of the same type", () => {
       let todd = function (arr) {
-        values.paramTest(todd, arguments, { arr: "Array<string>" });
+        values.paramTestNOW("todd", "arr", "Array<string>", arr);
       };
       assert.throws(() => {
         todd([1, 2, 3]);
       }, `todd expects all entries in arr to be type string got ["number","number","number"]`);
-    });
-    it("should throw the correct error when expecting an array of the same type with anonymous function", () => {
-      function todd() {
-        this.test = (arr) => {
-          values.paramTest(this.test, arguments, { arr: "Array<string>" });
-        }
-      }
-      assert.throws(() => {
-        new todd().test([1, 2, 3])
-      }, `Anonymous expects arr to be type Array got undefined`);
     });
   });
   describe("keyTest", () => {
