@@ -200,7 +200,7 @@ describe("objects", () => {
       let task = () => {
         carve(arr, "name", "ronald")
       }
-      assert.throws(task, "carve expected object with name value ronald. Found no matchin entries.")
+      assert.throws(task, "carve expected object with name value ronald. Found no matching entries.")
     })
   });
   describe("allFieldsNull", () => {
