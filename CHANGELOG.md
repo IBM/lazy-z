@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0] - tbd
+## [1.2.0] - 
+
+- Added parameter tests back to functions
+- Removed `getFunctionNames`
+- Changed files to have function in alphabetical order to closer line up with the README
+- Added functionality to `carve` to prevent the accidental deletion of items when searching for an unfound object.
+
+## [1.1.0] - 2022-8-21
 
 - Added methods:
     - `objectAtFirstKey`
