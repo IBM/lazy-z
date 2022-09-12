@@ -8,6 +8,7 @@ const {
   arraySplatIndex,
   getObjectFromArray,
   carve,
+  allFieldsNull,
 } = require("../lib/objects");
 
 describe("objects", () => {
@@ -182,6 +183,34 @@ describe("objects", () => {
           },
         ],
         "it should change array in place"
+      );
+    });
+    it("should throw an error if trying to carve unfound object", () => {
+      let arr = [
+        {
+          name: "todd",
+        },
+        {
+          name: "egg",
+        },
+        {
+          name: "frog",
+        },
+      ];
+      let task = () => {
+        carve(arr, "name", "ronald")
+      }
+      assert.throws(task, "carve expected object with name value ronald. Found no matchin entries.")
+    })
+  });
+  describe("allFieldsNull", () => {
+    it("should return true if all fields are null", () => {
+      assert.isTrue(allFieldsNull({ one: null }), "it should be true");
+    });
+    it("should return false if all fields not null", () => {
+      assert.isFalse(
+        allFieldsNull({ one: null, two: 2 }),
+        "it should be false"
       );
     });
   });

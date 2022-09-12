@@ -86,32 +86,35 @@ describe("shortcuts", () => {
   });
   describe("keyValueType", () => {
     it("should return the object key type", () => {
-      let actualData = shortcuts.keyValueType({
-        sub_obj: {
-          one: "one",
+      let actualData = shortcuts.keyValueType(
+        {
+          sub_obj: {
+            one: "one",
+          },
         },
-      }, "sub_obj");
+        "sub_obj"
+      );
       assert.deepEqual(actualData, "object", "it should return object");
     });
   });
   describe("isString", () => {
     let isString = shortcuts.isString;
     it("should return true if string", () => {
-      assert.isTrue(isString("string"))
-    })
+      assert.isTrue(isString("string"));
+    });
     it("should return false if not string", () => {
-      assert.isFalse(isString())
-    })
-  })
+      assert.isFalse(isString());
+    });
+  });
   describe("isBoolean", () => {
     let isBoolean = shortcuts.isBoolean;
     it("should return true if boolean", () => {
-      assert.isTrue(isBoolean(true))
-    })
+      assert.isTrue(isBoolean(true));
+    });
     it("should return false if not string", () => {
-      assert.isFalse(isBoolean())
-    })
-  })
+      assert.isFalse(isBoolean());
+    });
+  });
   describe("isIpv4CidrOrAddress", () => {
     let isIpv4CidrOrAddress = shortcuts.isIpv4CidrOrAddress;
     it("should return true if ipv4 cidr block", () => {
@@ -139,6 +142,14 @@ describe("shortcuts", () => {
         validIpv4Test("test", "1.2.3.4/5");
       };
       assert.doesNotThrow(task, "no throw");
+    });
+  });
+  describe("isFunction", () => {
+    it("should return true if a function", () => {
+      assert.isTrue(
+        shortcuts.isFunction(() => {}),
+        "it should be"
+      );
     });
   });
 });

@@ -13,6 +13,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [eachKey](#eachkey)
    - [isBoolean](#isBoolean)
    - [isEmpty](#isempty)
+   - [isFunction](#isfunction)
    - [isIpv4CidrOrAddress](#isIpv4CidrOrAddress)
    - [isString](#isString)
    - [keys](#keys)
@@ -25,12 +26,9 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [containsAny](#containsany)
    - [containsCheck](#containscheck)
    - [emptyCheck](#emptycheck)
-   - [getFunctionParams](#getfunctionparams)
    - [getType](#getType)
-   - [isFunction](#isfunction)
    - [keyCheck](#keyCheck)
    - [keyTest](#keytest)
-   - [paramTest](#paramtest)
    - [typeCheck](#typecheck)
 4. [String Methods](#string-methods)
    - [capitalize](#capitalize)
@@ -39,6 +37,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
 5. [Object Methods](#object-methods)
+   - [allFieldsNull](#allFieldsNull)
    - [arraySplatIndex](#arraySplatIndex)
    - [carve](#carve)
    - [duplicateKeyTest](#duplicateKeyTest)
@@ -84,7 +83,7 @@ const { azsort } = require("lazy-z");
 
 ### contains
 
-Shortcut to check if string or array of strings contains a value
+Shortcut to check if string or array contains a value
 
 ```js
 const { contains } = require("lazy-z");
@@ -113,7 +112,7 @@ true;
 
 ### distinct
 
-Returns all distinct entries in an array of strings
+Returns all distinct entries in an array
 
 ```js
 const { disctinct } = require("lazy-z");
@@ -160,6 +159,17 @@ isEmpty(emptyArray) // returns true
 isEmpty(["item"])   // returns false
 ```
 
+### isFunction
+
+Returns true if a value is a function
+
+```js
+const { isFunction } = require("lazy-z");
+
+isFunction("string"); // returns false
+isFunction(isFunction); // returns true
+```
+
 ### isIpv4CidrOrAddress
 
 Test if a value is a valid IPV4 CIDR block or address.
@@ -169,7 +179,7 @@ const { isIpv4CidrOrAddress } = require("lazy-z");
 
 isIpv4CidrOrAddress("8.8.8.8")  // returns true
 isIpv4CidrOrAddress("8.8.8.8/8")  // returns true
-isIpv4CidrOrAddress(["item"])  // returns false
+isIpv4CidrOrAddress("item")  // returns false
 ```
 
 ### isString
@@ -294,7 +304,7 @@ true;
 
 ### containsCheck
 
-Test to see if an array of strings contains a value. Throw an error if not in the array
+Test to see if an array contains a value. Throw an error if not in the array
 
 ```js
 const { containsCheck } = require("lazy-z");
@@ -321,21 +331,6 @@ emptyCheck("array should not be empty", [])
 
 ```
 
-### getFunctionParams
-
-Get a list of the names of parameters for a function
-
-```js
-const { getFunctionParams } = require("lazy-z");
-
-function test(one, two, three, four) {}
-
-getFunctionParams(test)[
-  // returns
-  ("one", "two", "three", "four")
-];
-```
-
 ### getType
 
 Get the type of a value, evaluates to `string`, `number`, `object`, `boolean`, `Array`, or `Function`
@@ -354,17 +349,6 @@ getType([]);
 getType({});
 // returns
 ("object");
-```
-
-### isFunction
-
-Returns true if a value is a function
-
-```js
-const { isFunction } = require("lazy-z");
-
-isFunction("string"); // returns false
-isFunction(isFunction); // returns true
 ```
 
 ### keyCheck
@@ -409,23 +393,6 @@ const { keyTest } = require("lazy-z");
 keyTest({foo: "baz"}, ["foo"]); // returns true
 keyTest({foo: "baz", bar: "bar"}, ["foo"], true); // returns false
 keyTest({foo: "baz", bar: "bar"}, ["foo", bar], true); // returns true
-```
-
-### paramTest
-
-A shortcut functions that takes in a functions and checks for parameter types. Will throw an error for mismatched types. Types can be `string`, `number`, `object`, `boolean`, `Array`, or `Function`.
-
-```js
-const { paramTest } = require("lazy-z");
-
-function example(str, bool, arr, num) {
-  paramTest(example, arguments, {
-    str: "string",
-    bool: "boolean",
-    arr: "Array<string>",
-    num: "number",
-  });
-}
 ```
 
 ### typeCheck
@@ -518,6 +485,19 @@ stringify(
 ## Object Methods
 
 Methods for manipulating objects and arrays of objects
+
+### allFieldsNull
+
+Check an object to see if all fields returned are null.
+
+```js
+const { allFieldsNull } = require("./lazy-z");
+
+// returns true
+allFieldsNull({test: null})
+// returns false
+allFieldsNull({test: null, foo: "bar"})
+```
 
 ### arraySplatIndex
 

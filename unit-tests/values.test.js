@@ -48,9 +48,18 @@ describe("values", () => {
     });
   });
   describe("paramTest", () => {
+    it("should throw the correct error when too few arguments are passed", () => {
+      let task = () => {
+        values.paramTest("todd");
+      };
+      assert.throws(
+        task,
+        "paramTest expected 3 arguments for each variable to be passed as params, got 0"
+      );
+    });
     it("should throw the correct error when expecting an array of the same type", () => {
       let todd = function (arr) {
-        values.paramTestNOW("todd", "arr", "Array<string>", arr);
+        values.paramTest("todd", "arr", "Array<string>", arr);
       };
       assert.throws(() => {
         todd([1, 2, 3]);
@@ -136,26 +145,18 @@ describe("values", () => {
       assert.isTrue(actualData, "should be true");
     });
   });
-  describe("isFunction", () => {
-    it("should return true if a function", () => {
-      assert.isTrue(
-        isFunction(() => {}),
-        "it should be"
-      );
-    });
-  });
   describe("emptyCheck", () => {
     it("should throw an error if an array is empty", () => {
       let task = () => {
-        values.emptyCheck("why", [])
-      }
-      assert.throws(task, "why")
-    })
+        values.emptyCheck("why", []);
+      };
+      assert.throws(task, "why");
+    });
     it("should not throw if the array has an entry", () => {
       let task = () => {
-        values.emptyCheck("why", ["why"])
-      }
-      assert.doesNotThrow(task, "should not throw")
-    })
-  })
+        values.emptyCheck("why", ["why"]);
+      };
+      assert.doesNotThrow(task, "should not throw");
+    });
+  });
 });
