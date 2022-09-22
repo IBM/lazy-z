@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.2.0] - 
+## [1.3.0] - 2022 - 9 - 22
+
+- Added Methods:
+    - `flatten`
+    - `splatContains`
+    - `isArray`
+    - `revision`
+
+## [1.2.0] - 2022 - 9 - 10
 
 - Added parameter tests back to functions
 - Removed `getFunctionNames`

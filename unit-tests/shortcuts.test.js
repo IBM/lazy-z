@@ -152,4 +152,12 @@ describe("shortcuts", () => {
       );
     });
   });
+  describe("isArray", () => {
+    it("should return true if array", () => {
+      assert.isTrue(
+        shortcuts.isArray([]),
+        "it should be"
+      );
+    });
+  });
 });

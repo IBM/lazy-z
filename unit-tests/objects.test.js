@@ -9,6 +9,7 @@ const {
   getObjectFromArray,
   carve,
   allFieldsNull,
+  splatContains,
 } = require("../lib/objects");
 
 describe("objects", () => {
@@ -51,6 +52,26 @@ describe("objects", () => {
         ["todd", "egg", "frog"],
         "should return array"
       );
+    });
+  });
+  describe("splatContains", () => {
+    it("should return the values as an array", () => {
+      let actualData = splatContains(
+        [
+          {
+            name: "todd",
+          },
+          {
+            name: "egg",
+          },
+          {
+            name: "frog",
+          },
+        ],
+        "name",
+        "egg"
+      );
+      assert.deepEqual(actualData, true, "should contain egg");
     });
   });
   describe("hasDuplicateKeys", () => {
@@ -198,10 +219,13 @@ describe("objects", () => {
         },
       ];
       let task = () => {
-        carve(arr, "name", "ronald")
-      }
-      assert.throws(task, "carve expected object with name value ronald. Found no matching entries.")
-    })
+        carve(arr, "name", "ronald");
+      };
+      assert.throws(
+        task,
+        "carve expected object with name value ronald. Found no matching entries."
+      );
+    });
   });
   describe("allFieldsNull", () => {
     it("should return true if all fields are null", () => {
