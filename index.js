@@ -4,5 +4,6 @@ module.exports = {
   ...require("./lib/values"),
   ...require("./lib/strings"),
   ...require("./lib/encode"),
-  ...require("./lib/objects")
+  ...require("./lib/objects"),
+  ...require("./lib/revision")
 };
