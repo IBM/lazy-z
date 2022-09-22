@@ -221,6 +221,39 @@ describe("get object data from chain", () => {
         "todd should be there"
       );
     });
+    it("should set a field with defaults and no defaults", () => {
+      let data = {};
+      new revision(data).set("teleport_config", {
+        _no_default: [
+          "teleport_license",
+          "https_cert",
+          "https_key",
+          "domain",
+          "cos_bucket_name",
+          "cos_key_name",
+          "teleport_version",
+          "message_of_the_day",
+          "hostname",
+          "app_id_key_name"
+        ],
+        _defaults: {
+          claims_to_roles: []
+        }
+      })
+      assert.deepEqual(data.teleport_config, {
+        teleport_license: null,
+        https_cert: null,
+        https_key: null,
+        domain: null,
+        cos_bucket_name: null,
+        cos_key_name: null,
+        teleport_version: null,
+        message_of_the_day: null,
+        hostname: null,
+        app_id_key_name: null,
+        claims_to_roles: [],
+      }, "it should set the value")
+    })
   });
   describe("then", () => {
     it("should invoke callback with data", () => {
