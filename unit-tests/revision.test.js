@@ -1,6 +1,6 @@
 const { assert } = require("chai");
 const { splat } = require("../lib/objects");
-const revision = require("../lib/revision");
+const { revision } = require("../lib/revision");
 
 describe("get object data from chain", () => {
   it("should get data from child", () => {
