@@ -5,7 +5,18 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Shortcut Methods](#shorcut-methods)
+2. [Revision Constructor](#revision-constructor)
+   - [Revision Methods](#revision-methods)
+     - [child](#revisionchild)
+     - [deleteArrChild](#revisiondeletearrchild)
+     - [duplicateIndexCheck](#revisionduplicateindexcheck)
+     - [push](#revisionpush)
+     - [set](#revisionset)
+     - [then](#revisionthen)
+     - [update](#revisionupdate)
+     - [updateEachChild](#revisionupdateeachchild)
+     - [updateEachNestedChild](#revisionupdateEachNestedChild)
+3. [Shortcut Methods](#shorcut-methods)
    - [azsort](#azsort)
    - [contains](#contains)
    - [containsKeys](#containskeys)
@@ -21,7 +32,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [objectAtFirstKey](#objectAtFirstKey)
    - [prettyJSON](#prettyjson)
    - [validIpv4Test](#validIpv4Test)
-3. [Value Test Methods](#value-test-methods)
+4. [Value Test Methods](#value-test-methods)
    - [arrTypeCheck](#arrtypecheck)
    - [containsAny](#containsany)
    - [containsCheck](#containscheck)
@@ -30,13 +41,13 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [keyCheck](#keyCheck)
    - [keyTest](#keytest)
    - [typeCheck](#typecheck)
-4. [String Methods](#string-methods)
+5. [String Methods](#string-methods)
    - [capitalize](#capitalize)
    - [getLongestKey](#getlongestkey)
    - [matchLength](#matchlength)
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
-5. [Object Methods](#object-methods)
+6. [Object Methods](#object-methods)
    - [allFieldsNull](#allFieldsNull)
    - [arraySplatIndex](#arraySplatIndex)
    - [carve](#carve)
@@ -44,17 +55,19 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [getObjectFromArray](#getObjectFromArray)
    - [hasDuplicateKeys](#hasDuplicateKeys)
    - [splat](#splat)
-   - [spreadValues](#spreadValues)
+   - [splatContains](#splatContains)
+   - [spreadKeyValues](#spreadKeyValues)
    - [transpose](#transpose)
-5. [Encoding Methods](#encoding-methods)
+7. [Encoding Methods](#encoding-methods)
    - [hclEncode](#hclEncode)
-6. [CLI Utility Methods](#cli-utility-methods)
+8. [CLI Utility Methods](#cli-utility-methods)
    - [flagTest](#flagtest)
-   - [flagValues]
    - [getVerbActions](#getVerbActions)
    - [replaceOptionalFlags](#replaceoptionalflags)
-7. [Contributing](#contributing)
-8. [Code Test Coverage](#code-test-coverage)
+9. [Array Methods](#array-methods)
+   - [flatten](#flatten)
+10. [Contributing](#contributing)
+11. [Code Test Coverage](#code-test-coverage)
 
 ---
 
@@ -62,6 +75,377 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 
 ```shell
 npm i lazy-z
+```
+
+---
+
+## Revision Constructor
+
+The revision constructor allows for users to update complex JSON objects in place with easy to read chaining syntax.
+
+```js
+let testData = {
+  data : [
+    {
+      name: "test"
+      value: false
+    }
+  ]
+}
+
+new revision(testData).child("data", "test").update({value: true});
+
+// updates testData to
+{
+  data : [
+    {
+      name: "test"
+      value: true
+    }
+  ]
+}
+```
+
+## Revision Methods
+
+### revision.child
+
+Get data from an object. If getting data from an array of objects, users can specify a search value and index. The default index is `name`.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+
+let obj = new revision(testData).child("sons", "myson").data;
+// gets the value
+{
+  name: "myson",
+  value: "yes",
+}
+
+let obj = new revision(testData).child("sons", "also yes", "value").data;
+// gets the value
+{
+  name: "myotherson",
+  value: "also yes"
+}
+
+let obj = new revision(testData).child("sons", "also yes", "value").child("name").data;
+// gets the value
+"myotherson"
+```
+
+### revision.deleteArrChild
+
+Delete an object from an array of objects using a value, and optionally an index (defaults to `name`).
+
+```js
+const { revision } = require("lazy-z");
+let testData = {
+  enemies: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+
+new revision(testData)
+  .child("enemies")
+  .deleteArrChild("myson")
+  .deleteArrChild("also yes", "value");
+
+// deletes entries from array `enemies` testData value is now
+{
+  enemies: [];
+}
+```
+
+### revision.duplicateIndexCheck
+
+check an array of objects has a duplicate field value.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  friends: [
+    {
+      name: "gary",
+      test: "test",
+    },
+  ],
+};
+
+// throws an error, an object with name gary already exists in `friends` array
+new revision(testData).duplicateIndexCheck("friends", { name: "gary" });
+
+// throws an error, an object with the test value `"test"`  already exists in `friends` array
+new revision(testData).duplicateIndexCheck(
+  "friends",
+  {
+    name: "todd",
+    test: "test",
+  },
+  {
+    oldValue: "frog",
+    index: "test",
+  }
+);
+
+// does not throw
+new revision(testData).duplicateIndexCheck("friends", { name: "kyle" });
+```
+
+### revision.push
+
+Push a value to a nested child array. Users specify a template and parameters for an object, or only parameters.
+
+#### No Template
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+
+// adds the object to the sons array
+new revision(testData).child("sons").push({
+  name: "todd",
+});
+```
+
+#### With Template
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+let template = { _no_default: ["foo", "name", "value"], _defaults: { bar: true } };
+
+new revision(testData).child("sons").push(template, {
+  name: "todd",
+});
+
+// adds the object to the sons array
+{
+  name: "todd",
+  foo: null,
+  value: null,
+  bar: true
+}
+
+```
+
+### revision.set
+
+Set the value of an object key. Users specify a template and parameters for an object, or only parameters.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+const template = { _no_default: ["foo", "bar", "name", "value"] };
+new revision(testData).set("todds_place", template, {
+  name: "todd",
+});
+
+// sets test_data.todds_place to value
+{
+  foo: null,
+  bar: null,
+  name: "todd",
+  value: null
+}
+```
+
+### revision.then
+
+Perform arbitrary code in the chain using the current data without exiting.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData;
+new revision({ hi: "mom" }).then((data) => {
+  testValue = data;
+});
+
+// sets testValue to
+{
+  hi: "mom";
+}
+```
+
+### revision.update
+
+Update an object from a complex object in place.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+
+new revision(testData)
+  .child("sons", "myotherson")
+  .update({ value: "awww yeah" });
+
+// sets the value of testData.sons[1] in place to
+{
+  name: "myotherson",
+  value: "awww yeah",
+}
+```
+
+### revision.updateChild
+
+Update a child array without changing the data in the revision store chain.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  friends: [{ name: "bear", test: "value" }],
+};
+
+let updateData = new revision(testData).updateChild("friends", "bear", {
+  test: "thumbsup",
+}).data;
+
+// value for testData and update data
+{
+  friends: [{ name: "bear", test: "thumbsup" }],
+}
+```
+
+### revision.updateEachChild
+
+Update each child of an array with a callback function.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  friends: [
+    {
+      name: "kyle",
+      high_score: 12,
+    },
+    {
+      name: "kevin",
+      high_score: 100,
+    },
+  ],
+};
+
+// change each value for high_score to 0 in place
+new revision(testData).updateEachChild("friends", (friend) => {
+  friend.high_score = 0;
+});
+
+```
+
+### revision.updateEachNestedChild
+
+Update each nested child within any depth of arrays.
+
+```js
+const { revision } = require("lazy-z");
+let testData = {
+  a: [{
+      b: [{
+        c: [{ test: "true" }]
+      }]
+    },
+    {
+      b: [{
+        c: [{ test: "true" }]
+      },{
+        c: [{ test: "true" }],
+      }]
+    }
+  ]
+};
+
+new revision(testData).updateEachNestedChild(["a", "b", "c"], (entry) => {
+  entry.test = false;
+});
+
+// updates test data value to
+{
+  a: [{
+      b: [{
+        c: [{ test: false }]
+      }]
+    },
+    {
+      b: [{
+        c: [{ test: false }]
+      },{
+        c: [{ test: false }],
+      }]
+    }
+  ]
+}
 ```
 
 ---
@@ -140,10 +524,10 @@ eachKey({ one: 1, two: 2 }, (key, index) => {
 Test if a value is boolean
 
 ```js
-const { isBoolean } = require("lazy-z")
+const { isBoolean } = require("lazy-z");
 
-isBoolean(true)  // returns true
-isBoolean(["item"])  // returns false
+isBoolean(true); // returns true
+isBoolean(["item"]); // returns false
 ```
 
 ### isEmpty
@@ -151,12 +535,12 @@ isBoolean(["item"])  // returns false
 Test if an array has no entries
 
 ```js
-const { isEmpty } = require("lazy-z")
+const { isEmpty } = require("lazy-z");
 
-let emptyArray = []
+let emptyArray = [];
 
-isEmpty(emptyArray) // returns true
-isEmpty(["item"])   // returns false
+isEmpty(emptyArray); // returns true
+isEmpty(["item"]); // returns false
 ```
 
 ### isFunction
@@ -177,9 +561,9 @@ Test if a value is a valid IPV4 CIDR block or address.
 ```js
 const { isIpv4CidrOrAddress } = require("lazy-z");
 
-isIpv4CidrOrAddress("8.8.8.8")  // returns true
-isIpv4CidrOrAddress("8.8.8.8/8")  // returns true
-isIpv4CidrOrAddress("item")  // returns false
+isIpv4CidrOrAddress("8.8.8.8"); // returns true
+isIpv4CidrOrAddress("8.8.8.8/8"); // returns true
+isIpv4CidrOrAddress("item"); // returns false
 ```
 
 ### isString
@@ -187,11 +571,12 @@ isIpv4CidrOrAddress("item")  // returns false
 Test if a value is a string
 
 ```js
-const { isString } = require("lazy-z")
+const { isString } = require("lazy-z");
 
-isString("string")  // returns true
-isString(["item"])  // returns false
+isString("string"); // returns true
+isString(["item"]); // returns false
 ```
+
 ### keys
 
 Get the keys of an object
@@ -211,9 +596,9 @@ Get the type of an object property by key name
 ```js
 const { keyValueType } = require("lazy-z");
 
-keyValueType({one: 1}, "one");
+keyValueType({ one: 1 }, "one");
 // returns
-"number"
+("number");
 ```
 
 ### objectAtFirstKey
@@ -221,21 +606,21 @@ keyValueType({one: 1}, "one");
 Shortcut to get the nested object from the first key of the parent
 
 ```js
-const {objectAtFirstKey} = require("lazy-z");
+const { objectAtFirstKey } = require("lazy-z");
 
 let obj = {
   sub_obj: {
-    one: "one"
-  }
-}
+    one: "one",
+  },
+};
 
-objectAtFirstKey(obj)
+objectAtFirstKey(obj);
 // returns
 {
-  one: "one"
+  one: "one";
 }
-
 ```
+
 ### prettyJSON
 
 Shortcut for JSON.stringify(obj, null, 2)
@@ -259,10 +644,10 @@ Test if a value is a valid IPV4 CIDR block or IP address. Throw an error if it i
 ```js
 const { validIpv4Test } = require("lazy-z");
 
-validIpv4Test("test", "honk"); 
+validIpv4Test("test", "honk");
 
 // throws
-"test expected valid ipv4 address or CIDR block, got honk"
+("test expected valid ipv4 address or CIDR block, got honk");
 ```
 
 ---
@@ -313,8 +698,7 @@ containsCheck(
   "should contain the number 4",
   ["frog", "string", "egg"],
   "4"
-) 
-// throws
+)// throws
 `should contain the number 4 got ["frog", "string", "egg"]`;
 ```
 
@@ -325,10 +709,8 @@ Test to see if an array is empty. Throw an error if it is.
 ```js
 const { emptyCheck } = require("lazy-z");
 
-emptyCheck("array should not be empty", [])
-// throws
-`array should not be empty`
-
+emptyCheck("array should not be empty", [])// throws
+`array should not be empty`;
 ```
 
 ### getType
@@ -494,9 +876,9 @@ Check an object to see if all fields returned are null.
 const { allFieldsNull } = require("./lazy-z");
 
 // returns true
-allFieldsNull({test: null})
+allFieldsNull({ test: null });
 // returns false
-allFieldsNull({test: null, foo: "bar"})
+allFieldsNull({ test: null, foo: "bar" });
 ```
 
 ### arraySplatIndex
@@ -504,23 +886,23 @@ allFieldsNull({test: null, foo: "bar"})
 Get the index of an object from an array of objects with a specified key value.
 
 ```js
-const { arraySplatIndex } = require("lazy-z")
+const { arraySplatIndex } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-arraySplatIndex(arr, "name", "todd")
-// returns 
-0
+arraySplatIndex(arr, "name", "todd");
+// returns
+0;
 ```
 
 ### carve
@@ -528,36 +910,34 @@ arraySplatIndex(arr, "name", "todd")
 Remove an object from an array of objects with a specific key value.
 
 ```js
-const { carve } = require("lazy-z")
+const { carve } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-carve(arr, "name", "todd")
-// returns 
-[
+carve(arr, "name", "todd")[
+  // returns
   {
-    name: "todd"
+    name: "todd",
   }
-]
-// array value is now 
-[
-  {
-    name: "egg"
+][
+  // array value is now
+  ({
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  })
+];
 ```
 
 ### duplicateKeyTest
@@ -565,51 +945,48 @@ carve(arr, "name", "todd")
 Test to see if an array of objects has any values with a duplicate key.
 
 ```js
-const { duplicateKeyTest } = require("lazy-z")
+const { duplicateKeyTest } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-duplicateKeyTest("test", arr, "name", "todd")
+duplicateKeyTest("test", arr, "name", "todd");
 // throws
-"test expected no duplicate keys for name. Duplicate value: todd"
-
+("test expected no duplicate keys for name. Duplicate value: todd");
 ```
-
 
 ### getObjectFromArray
 
 Get an object from an array of objects with a specific key value
 
-
 ```js
-const { getObjectFromArray } = require("lazy-z")
+const { getObjectFromArray } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-getObjectFromArray(arr, "name", "todd")
-// returns 
+getObjectFromArray(arr, "name", "todd");
+// returns
 {
-  name: "todd"
+  name: "todd";
 }
 ```
 
@@ -618,22 +995,22 @@ getObjectFromArray(arr, "name", "todd")
 Check to see if an object with a key value exists in an array of objects
 
 ```js
-const { hasDuplicateKeys } = require("lazy-z")
+const { hasDuplicateKeys } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-hasDuplicateKeys(arr, "name", "todd") // returns true
-hasDuplicateKeys(arr, "name", "ham") // returns false
+hasDuplicateKeys(arr, "name", "todd"); // returns true
+hasDuplicateKeys(arr, "name", "ham"); // returns false
 ```
 
 ### splat
@@ -641,43 +1018,67 @@ hasDuplicateKeys(arr, "name", "ham") // returns false
 Get all values from a specified object key in an array of objects.
 
 ```js
-const { splat } = require("lazy-z")
+const { splat } = require("lazy-z");
 
 let arr = [
   {
-    name: "todd"
+    name: "todd",
   },
   {
-    name: "egg"
+    name: "egg",
   },
   {
-    name: "frog"
-  }
-]
+    name: "frog",
+  },
+];
 
-splat(arr, "name")
+splat(arr, "name")[
+  // returns
+  ("todd", "egg", "frog")
+];
+```
 
-// returns
-["todd", "egg", "frog"]
+### splatContains
+
+Get all values for a field in an array of objects and return true if a specified value is found.
+
+```js
+const { splatContains } = require("lazy-z");
+
+// returns true
+splatContains(
+  [
+    {
+      name: "todd",
+    },
+    {
+      name: "egg",
+    },
+    {
+      name: "frog",
+    },
+  ],
+  "name",
+  "egg"
+)
 
 ```
 
-### spreadValues
+### spreadKeyValues
 
 Transform all key values from an object into an array.
 
 ```js
-const { spreadValues } = require("lazy-z")
+const { spreadKeyValues } = require("lazy-z");
 
-spreadValues({
+spreadKeyValues({
   one: 1,
   two: 2,
-  three: 3
-})
-
-// returns
-[1,2,3]
-
+  three: 3,
+})[
+  // returns
+  (1, 2, 3)
+];
 ```
 
 ### transpose
@@ -942,6 +1343,7 @@ getVerbActions(plan, tags)
   "?--shallow" | "?-s"
 };
 ```
+
 ---
 
 ### replaceOptionalFlags
@@ -961,7 +1363,7 @@ Replace literal optional arguments by prepending `?*` for multiple optional argu
 function replaceOptionalFlags(action, tags, ...commandArgs)
 ```
 
-Example use: 
+Example use:
 
 ```js
 let commandFlags = {
@@ -972,8 +1374,8 @@ let commandFlags = {
       allowMultiple: true,
     },
     {
-      name: "shallow"
-    }
+      name: "shallow",
+    },
   ],
 };
 
@@ -983,20 +1385,44 @@ let tags = {
   out: ["-o", "--out"],
   type: ["-t", "--type"],
   tfvar: ["-v", "--tf-var"],
-  shallow: ["-s", "--shallow"]
+  shallow: ["-s", "--shallow"],
 };
 
-replaceOptionalFlags(commandFlags, tags, "--in", "file_path", "--shallow")
+replaceOptionalFlags(commandFlags, tags, "--in", "file_path", "--shallow")[
+  // returns
+  ("--in", "file_path", "?--shallow")
+];
+```
 
-// returns
-["--in", "file_path", "?--shallow"]
+---
+
+## Array Methods
+
+### flatten
+
+Create a single tiered array from a multi-tiered array.
+
+```js
+const { flatten } = require("lazy-z");
+
+let testData = [
+  "one",
+  ["two"],
+  [["three", "four"]],
+  [[["five", "six", [["seven"]]]]],
+];
+
+flatten(testData)[
+  // returns
+  ("one", "two", "three", "four", "five", "six", "seven")
+];
 ```
 
 ---
 
 ## Contributing
 
-If you have any questions or issues you can create a new [issue here][issues]. See the full contribution guidelines [here](./CONTRIBUTING.md). 
+If you have any questions or issues you can create a new [issue here][issues]. See the full contribution guidelines [here](./CONTRIBUTING.md).
 
 This repo uses [Prettier JS](https://prettier.io/) for formatting. We recommend using the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode).
 
@@ -1014,12 +1440,14 @@ example:
 
 ## Code Test Coverage
 
-File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
---------------|---------|----------|---------|---------|-------------------
-All files     |     100 |      100 |     100 |     100 | 🏆                 
- cli-utils.js |     100 |      100 |     100 |     100 | 🏆                   
- encode.js    |     100 |      100 |     100 |     100 | 🏆   
- objects.js   |     100 |      100 |     100 |     100 | 🏆              
- shortcuts.js |     100 |      100 |     100 |     100 | 🏆                   
- strings.js   |     100 |      100 |     100 |     100 | 🏆                   
- values.js    |     100 |      100 |     100 |     100 | 🏆                   
+| File         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
+| ------------ | ------- | -------- | ------- | ------- | ----------------- |
+| All files    | 100     | 100      | 100     | 100     | 🏆                |
+| arrays.js    | 100     | 100      | 100     | 100     | 🏆                |
+| cli-utils.js | 100     | 100      | 100     | 100     | 🏆                |
+| encode.js    | 100     | 100      | 100     | 100     | 🏆                |
+| objects.js   | 100     | 100      | 100     | 100     | 🏆                |
+| revision.js  | 100     | 100      | 100     | 100     | 🏆                |
+| shortcuts.js | 100     | 100      | 100     | 100     | 🏆                |
+| strings.js   | 100     | 100      | 100     | 100     | 🏆                |
+| values.js    | 100     | 100      | 100     | 100     | 🏆                |

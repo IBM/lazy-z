@@ -1,5 +1,4 @@
 const { assert } = require("chai");
-const { isFunction, keyTest } = require("../lib/values");
 const values = require("../lib/values");
 describe("values", () => {
   describe("getType", () => {
