@@ -26,6 +26,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [isEmpty](#isempty)
    - [isFunction](#isfunction)
    - [isIpv4CidrOrAddress](#isIpv4CidrOrAddress)
+   - [isNullOrEmptyString](#isNullOrEmptyString)
    - [isString](#isString)
    - [keys](#keys)
    - [keyValueType](#keyValueType)
@@ -564,6 +565,18 @@ const { isIpv4CidrOrAddress } = require("lazy-z");
 isIpv4CidrOrAddress("8.8.8.8"); // returns true
 isIpv4CidrOrAddress("8.8.8.8/8"); // returns true
 isIpv4CidrOrAddress("item"); // returns false
+```
+
+### isNullOrEmptyString
+
+Test if a value is `null` or an empty string
+
+```js
+const { isNullOrEmptyString } = require("lazy-z");
+
+isNullOrEmptyString(null); // returns true
+isNullOrEmptyString(""); // returns true
+isNullOrEmptyString("item"); // returns false
 ```
 
 ### isString

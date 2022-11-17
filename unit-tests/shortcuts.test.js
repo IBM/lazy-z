@@ -121,9 +121,28 @@ describe("shortcuts", () => {
       let actualData = isIpv4CidrOrAddress("10.0.0.0/8");
       assert.isTrue(actualData, "it should be true");
     });
+    it("should return true if ipv4 cidr block", () => {
+      let actualData = isIpv4CidrOrAddress("256.0.0.0/8");
+      assert.isTrue(actualData, "it should be true");
+    });
     it("should return false if invalid ipv4 cidr block", () => {
       let actualData = isIpv4CidrOrAddress("310.0.0.0/8");
       assert.isFalse(actualData, "it should be false");
+    });
+    it("should return false if invalid ipv4 cidr block", () => {
+      let actualData = isIpv4CidrOrAddress("258.0.0.0/8");
+      assert.isFalse(actualData, "it should be false");
+    });
+  });
+  describe("isNullOrEmptyString", () => {
+    it("should return true if null", () => {
+      assert.isTrue(
+        shortcuts.isNullOrEmptyString(null),
+        "it should return true"
+      );
+    });
+    it("should return true if empty string", () => {
+      assert.isTrue(shortcuts.isNullOrEmptyString(""), "it should return true");
     });
   });
   describe("validIpv4Test", () => {
@@ -154,10 +173,7 @@ describe("shortcuts", () => {
   });
   describe("isArray", () => {
     it("should return true if array", () => {
-      assert.isTrue(
-        shortcuts.isArray([]),
-        "it should be"
-      );
+      assert.isTrue(shortcuts.isArray([]), "it should be");
     });
   });
 });
