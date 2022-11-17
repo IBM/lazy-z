@@ -176,4 +176,184 @@ describe("shortcuts", () => {
       assert.isTrue(shortcuts.isArray([]), "it should be");
     });
   });
+  describe("deepEqual", () => {
+    let deepEqual = shortcuts.deepEqual;
+    it("should return false if two data types passed in do not match", () => {
+      assert.isFalse(deepEqual(2, "hi"), "it should be false");
+    });
+    it("should return false if a string value does not match", () => {
+      assert.isFalse(deepEqual("frog", "todd"), "it should be false");
+    });
+    it("should return false if a boolean value does not match", () => {
+      assert.isFalse(deepEqual(true, false), "it should be false");
+    });
+    it("should return false if a number value does not match", () => {
+      assert.isFalse(deepEqual(1, 2), "it should be false");
+    });
+    it("should return false if two arrays have different lengths", () => {
+      assert.isFalse(deepEqual([], [""]), "it should be false");
+    });
+    it("should return false if the values of two arrays with only strings, numbers, and booleans are not equal", () => {
+      assert.isFalse(
+        deepEqual(["g", 1, false, "d"], ["g", 2, false, "d"]),
+        "it should return false"
+      );
+    });
+    it("should return true if the values of two arrays with only strings, numbers, and booleans are equal", () => {
+      assert.isTrue(
+        deepEqual(["g", 1, false, "d"], ["g", 1, false, "d"]),
+        "it should return false"
+      );
+    });
+    it("should return false if two objects have keys that are different lengths", () => {
+      assert.isFalse(deepEqual({ foo: "bar" }, {}), "it should be false");
+    });
+    it("should throw an error if actual data is a function", () => {
+      let task = () => deepEqual(() => {}, "frog");
+      assert.throws(task, `deepEqual does not accept Function as a type.`);
+    });
+    it("should throw an error if expected data is a function", () => {
+      let task = () => deepEqual(true, () => {});
+      assert.throws(task, `deepEqual does not accept Function as a type.`);
+    });
+    it("should return false if two objects have unmatched key values", () => {
+      assert.isFalse(
+        deepEqual({ foo: "bar" }, { foo: "baz" }),
+        "it should be false"
+      );
+    });
+    it("should return false if a big nested object does not equal", () => {
+      let actualData = [
+        {
+          cos_name: "atracker-cos",
+          entitlement: "cloud_pak",
+          kube_type: "openshift",
+          kube_version: "default",
+          machine_type: "bx2.16x64",
+          name: "workload-cluster",
+          resource_group: "slz-workload-rg",
+          kms_config: {
+            crk_name: "slz-roks-key",
+            private_endpoint: true,
+          },
+          subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+          update_all_workers: false,
+          vpc_name: "workload",
+          worker_pools: [
+            {
+              entitlement: "cloud_pak",
+              flavor: "bx2.16x64",
+              name: "logging-worker-pool",
+              subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+              vpc_name: "workload",
+              workers_per_subnet: 2,
+            },
+          ],
+          workers_per_subnet: 2,
+        },
+      ];
+      let expectedData = [
+        {
+          cos_name: "atracker-cos",
+          entitlement: "cloud_pak",
+          kube_type: "openshift",
+          kube_version: "default",
+          machine_type: "bx2.16x64",
+          name: "workload-cluster",
+          resource_group: "slz-workload-rg",
+          kms_config: {
+            crk_name: "slz-roks-key",
+            private_endpoint: true,
+          },
+          subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+          update_all_workers: false,
+          vpc_name: "workload",
+          worker_pools: [
+            {
+              entitlement: "cloud_pak",
+              flavor: "bx2.16x64",
+              name: "logging-worker-pool",
+              subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+              vpc_name: "honk",
+              workers_per_subnet: 2,
+            },
+          ],
+          workers_per_subnet: 2,
+        },
+      ];
+      assert.isFalse(deepEqual(actualData, expectedData), "it should be false");
+    });
+    it("should return true if a big nested object does equal", () => {
+      let actualData = [
+        {
+          cos_name: "atracker-cos",
+          entitlement: "cloud_pak",
+          kube_type: "openshift",
+          kube_version: "default",
+          machine_type: "bx2.16x64",
+          name: "workload-cluster",
+          resource_group: "slz-workload-rg",
+          kms_config: {
+            crk_name: "slz-roks-key",
+            private_endpoint: true,
+          },
+          subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+          update_all_workers: false,
+          vpc_name: "workload",
+          worker_pools: [
+            {
+              entitlement: "cloud_pak",
+              flavor: "bx2.16x64",
+              name: "logging-worker-pool",
+              subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+              vpc_name: "workload",
+              workers_per_subnet: 2,
+            },
+          ],
+          workers_per_subnet: 2,
+        },
+      ];
+      let expectedData = [
+        {
+          cos_name: "atracker-cos",
+          entitlement: "cloud_pak",
+          kube_type: "openshift",
+          kube_version: "default",
+          machine_type: "bx2.16x64",
+          name: "workload-cluster",
+          resource_group: "slz-workload-rg",
+          kms_config: {
+            crk_name: "slz-roks-key",
+            private_endpoint: true,
+          },
+          subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+          update_all_workers: false,
+          vpc_name: "workload",
+          worker_pools: [
+            {
+              entitlement: "cloud_pak",
+              flavor: "bx2.16x64",
+              name: "logging-worker-pool",
+              subnet_names: ["vsi-zone-1", "vsi-zone-2", "vsi-zone-3"],
+              vpc_name: "workload",
+              workers_per_subnet: 2,
+            },
+          ],
+          workers_per_subnet: 2,
+        },
+      ];
+      assert.isTrue(deepEqual(actualData, expectedData), "it should be false");
+    });
+    it("should return true if both values are null", () => {
+      assert.isTrue(deepEqual(null, null), "it should be true");
+    });
+  });
+  describe("isWholeNumber", () => {
+    it("should return true for whole number", () => {
+      assert.isTrue(shortcuts.isWholeNumber(1), "it should be true");
+    });
+    it("should return false for not whole number", () => {
+      assert.isFalse(shortcuts.isWholeNumber(1.2), "it should be false");
+    });
+  });
 });

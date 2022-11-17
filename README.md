@@ -20,6 +20,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [azsort](#azsort)
    - [contains](#contains)
    - [containsKeys](#containskeys)
+   - [deepEqual](#deepequal)
    - [distinct](#distinct)
    - [eachKey](#eachkey)
    - [isBoolean](#isBoolean)
@@ -28,6 +29,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [isIpv4CidrOrAddress](#isIpv4CidrOrAddress)
    - [isNullOrEmptyString](#isNullOrEmptyString)
    - [isString](#isString)
+   - [isWholeNumber](#isWholeNumber)
    - [keys](#keys)
    - [keyValueType](#keyValueType)
    - [objectAtFirstKey](#objectAtFirstKey)
@@ -495,6 +497,17 @@ containsKeys({ one: 1, two: 2 }, "one");
 true;
 ```
 
+### deepEqual
+
+Check to see if two values have all fields equal.
+
+```js
+const { deepEqual } = require("lazy-z");
+
+deepEqual({ foo: "bar" }, { foo: "baz" }) // returns false
+deepEqual({ foo: "bar" }, { foo: "bar" }) // returns true
+```
+
 ### distinct
 
 Returns all distinct entries in an array
@@ -588,6 +601,17 @@ const { isString } = require("lazy-z");
 
 isString("string"); // returns true
 isString(["item"]); // returns false
+```
+
+### isWholeNumber
+
+Shortcut for `<number> % 1 === 0`;
+
+```js
+const { isWholeNumber } = require("lazy-z");
+
+isWholeNumber(1000); // returns true
+isWholeNumber(1.234); // returns false
 ```
 
 ### keys
