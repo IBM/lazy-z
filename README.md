@@ -54,6 +54,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [stringify](#stringify)
 6. [Number Methods](#number-methods)
    - [isInRange](#isinrange)
+   - [validPortRange](#validPortRange)
 7. [Object Methods](#object-methods)
    - [allFieldsNull](#allFieldsNull)
    - [arraySplatIndex](#arraySplatIndex)
@@ -949,6 +950,31 @@ const { isInRange } = require("lazy-z");
 isInRange(1.5, 1, 2); // value, min, max
 // returns
 true
+```
+
+### validPortRange
+
+Check if a port range is valid. 
+
+```js
+const { validPortRange } = require("lazy-z");
+
+validPortRange(
+  // can be one of ["type","code","port_min","port_max","source_port_min","source_port_max"]
+  "port_min", 
+  8080
+)
+// returns
+true
+
+validPortRange(
+  // can be one of ["type","code","port_min","port_max","source_port_min","source_port_max"]
+  "type", 
+  257
+)
+// returns
+false
+
 ```
 
 ---
