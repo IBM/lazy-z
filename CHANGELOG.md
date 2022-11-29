@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
     - `snakeCase`
     - `camelCase`
     - `numberStringList`
+    - `isInRange`
+    - `validPortRange`
 
 ## [1.3.0] - 2022 - 9 - 22
 
