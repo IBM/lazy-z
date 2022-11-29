@@ -45,13 +45,16 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [keyTest](#keytest)
    - [typeCheck](#typecheck)
 5. [String Methods](#string-methods)
+   - [camelCase](#camelcase)
    - [capitalize](#capitalize)
    - [getLongestKey](#getlongestkey)
    - [kebabCase](#kebabcase)
    - [matchLength](#matchlength)
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
-6. [Object Methods](#object-methods)
+6. [Number Methods](#number-methods)
+   - [isInRange](#isinrange)
+7. [Object Methods](#object-methods)
    - [allFieldsNull](#allFieldsNull)
    - [arraySplatIndex](#arraySplatIndex)
    - [carve](#carve)
@@ -62,17 +65,17 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [splatContains](#splatContains)
    - [spreadKeyValues](#spreadKeyValues)
    - [transpose](#transpose)
-7. [Encoding Methods](#encoding-methods)
+8. [Encoding Methods](#encoding-methods)
    - [hclEncode](#hclEncode)
-8. [CLI Utility Methods](#cli-utility-methods)
+9. [CLI Utility Methods](#cli-utility-methods)
    - [flagTest](#flagtest)
    - [getVerbActions](#getVerbActions)
    - [replaceOptionalFlags](#replaceoptionalflags)
-9. [Array Methods](#array-methods)
+10. [Array Methods](#array-methods)
    - [numberStringList](#numberStringList)
    - [flatten](#flatten)
-10. [Contributing](#contributing)
-11. [Code Test Coverage](#code-test-coverage)
+11. [Contributing](#contributing)
+12. [Code Test Coverage](#code-test-coverage)
 
 ---
 
@@ -837,6 +840,21 @@ typeCheck(
 
 Methods for dealing with strings
 
+
+### camelCase
+
+Format a string from from `All Caps With Spaces` to `allCapsWithSpaces`
+
+```js
+const { camelCase } = require("lazy-z");
+
+camelCase(`All Caps With Spaces`);
+camelCase(`All_Caps with-Spaces`);
+camelCase(`all_caps_with_spaces`);
+// all return
+`allCapsWithSpaces`;
+```
+
 ### capitalize
 
 Capitalize the first character of a string
@@ -913,6 +931,24 @@ stringify(
   if (dataType === "Array" || dataType === "object") return prettyJSON(data);
   else return \`\${data}\`;
 }`;
+```
+
+---
+
+## Number Methods
+
+Methods for numbers
+
+### isInRange
+
+Return `true` if a number is contained in a range
+
+```js
+const { isInRange } = require("lazy-z");
+
+isInRange(1.5, 1, 2); // value, min, max
+// returns
+true
 ```
 
 ---

@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added Methods
     - `kebabCase`
     - `snakeCase`
+    - `camelCase`
     - `numberStringList`
 
 ## [1.3.0] - 2022 - 9 - 22
