@@ -47,6 +47,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 5. [String Methods](#string-methods)
    - [capitalize](#capitalize)
    - [getLongestKey](#getlongestkey)
+   - [kebabCase](#kebabcase)
    - [matchLength](#matchlength)
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
@@ -68,6 +69,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [getVerbActions](#getVerbActions)
    - [replaceOptionalFlags](#replaceoptionalflags)
 9. [Array Methods](#array-methods)
+   - [numberStringList](#numberStringList)
    - [flatten](#flatten)
 10. [Contributing](#contributing)
 11. [Code Test Coverage](#code-test-coverage)
@@ -859,6 +861,20 @@ getLongestKey({ a: true, bb: false, ccc: true });
 3;
 ```
 
+### kebabCase
+
+Format a string from from `All Caps With Spaces` to `all-caps-with-spaces`
+
+```js
+const { kebabCase } = require("lazy-z");
+
+kebabCase(`All Caps With Spaces`);
+kebabCase(`All_Caps with-Spaces`);
+kebabCase(`all_caps_with_spaces`);
+// all return
+`all-caps-with-spaces`;
+```
+
 ### matchLength
 
 Match the length of a string to a number by appending spaces
@@ -1434,6 +1450,22 @@ replaceOptionalFlags(commandFlags, tags, "--in", "file_path", "--shallow")[
 ---
 
 ## Array Methods
+
+### numberStringList
+
+Create a list of stringified numbers within a range
+
+```js
+const { numberStringList } = require("lazy-z");
+
+numberStringList(5);
+// returns
+["0", "1", "2","3", "4"];
+
+numberStringList(5,1);
+// returns
+["1", "2","3", "4", "5"];
+```
 
 ### flatten
 

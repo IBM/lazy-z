@@ -63,4 +63,58 @@ describe("string functions", () => {
       );
     });
   });
+  describe("kebabCase", () => {
+    it("should return a string with all the spaces and underscores replaced with - if a string is provided", () => {
+      let expectedData = `all-caps-with-spaces`;
+      assert.deepEqual(
+        utils.kebabCase(`All Caps With Spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.kebabCase(`All_Caps with-Spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.kebabCase(`all_caps_with_spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+    });
+    it("should return an empty string if not found", () => {
+      assert.deepEqual(
+        utils.kebabCase(false),
+        "",
+        "it should return empty string"
+      );
+    });
+  });
+  describe("snakeCase", () => {
+    it("should return a string with all the spaces and underscores replaced with _ if a string is provided", () => {
+      let expectedData = `all_caps_with_spaces`;
+      assert.deepEqual(
+        utils.snakeCase(`All Caps With Spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.snakeCase(`All_Caps with-Spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.snakeCase(`all-caps-with-spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+    });
+    it("should return an empty string if not found", () => {
+      assert.deepEqual(
+        utils.snakeCase(false),
+        "",
+        "it should return empty string"
+      );
+    });
+  });
 });
