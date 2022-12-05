@@ -12,6 +12,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
      - [duplicateIndexCheck](#revisionduplicateindexcheck)
      - [push](#revisionpush)
      - [set](#revisionset)
+     - [setDoneCallback](#revisionsetDoneCallback)
      - [then](#revisionthen)
      - [update](#revisionupdate)
      - [updateEachChild](#revisionupdateeachchild)
@@ -52,6 +53,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [matchLength](#matchlength)
    - [removeTrailingSpaces](#removetrailingspaces)
    - [stringify](#stringify)
+   - [titleCase](#titlecase)
 6. [Number Methods](#number-methods)
    - [isInRange](#isinrange)
    - [validPortRange](#validPortRange)
@@ -75,8 +77,9 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 10. [Array Methods](#array-methods)
    - [numberStringList](#numberStringList)
    - [flatten](#flatten)
-11. [Contributing](#contributing)
-12. [Code Test Coverage](#code-test-coverage)
+11. [lazyZstore](#lazyzstore)
+12. [Contributing](#contributing)
+13. [Code Test Coverage](#code-test-coverage)
 
 ---
 
@@ -314,6 +317,55 @@ new revision(testData).set("todds_place", template, {
   name: "todd",
   value: null
 }
+```
+
+### revision.setDoneCallback
+
+Set a callback function for the revision constructor. Trigger the function by calling `.done()` when terminating the chain.
+
+```js
+const { revision } = require("lazy-z");
+
+let testData = {
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+};
+const template = { _no_default: ["foo", "bar", "name", "value"] };
+new revision(testData)
+    .setDoneCallback(data => { console.log(data) })
+    .set("todds_place", template, {
+      name: "todd",
+    })
+    .done();
+
+// logs when done:
+{
+  sons: [
+    {
+      name: "myson",
+      value: "yes",
+    },
+    {
+      name: "myotherson",
+      value: "also yes",
+    },
+  ],
+  todds_place: {
+    foo: null,
+    bar: null,
+    name: "todd",
+    value: null
+  }
+}
+
 ```
 
 ### revision.then
@@ -932,6 +984,20 @@ stringify(
   if (dataType === "Array" || dataType === "object") return prettyJSON(data);
   else return \`\${data}\`;
 }`;
+```
+
+### titleCase
+
+Format a string from from `all-caps-with-spaces` to `All Caps With Spaces` 
+
+```js
+const { titleCase } = require("lazy-z");
+
+titleCase(`allCapsWithSpaces`);
+titleCase(`All_Caps with-Spaces`);
+titleCase(`all_caps_with_spaces`);
+// all return
+`All Caps With Spaces`;
 ```
 
 ---

@@ -8,9 +8,14 @@ All notable changes to this project will be documented in this file.
     - `kebabCase`
     - `snakeCase`
     - `camelCase`
+    - `titleCase`
     - `numberStringList`
     - `isInRange`
     - `validPortRange`
+    - `lazyZstore`
+- Added methods to revision
+    - `setDoneCallback`
+    - `done`
 
 ## [1.3.0] - 2022 - 9 - 22
 

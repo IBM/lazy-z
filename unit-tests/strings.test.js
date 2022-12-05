@@ -149,4 +149,41 @@ describe("string functions", () => {
       );
     });
   });
+  describe("titleCase", () => {
+    it("should return a string with all the spaces and underscores replaced with _ if a string is provided", () => {
+      let expectedData = `All Caps With Spaces`;
+      assert.deepEqual(
+        utils.titleCase(`allCapsWithSpaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`All_Caps with-Spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`all-caps-with-spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`all_caps_with_spaces`),
+        expectedData,
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`caps`),
+        "Caps",
+        "it should return data in correct case"
+      );
+    });
+    it("should return an empty string if not found", () => {
+      assert.deepEqual(
+        utils.titleCase(false),
+        "",
+        "it should return empty string"
+      );
+    });
+  });
 });

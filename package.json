@@ -1,6 +1,6 @@
 {
   "name": "lazy-z",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities",
   "main": "index.js",
   "scripts": {
