@@ -234,26 +234,30 @@ describe("get object data from chain", () => {
           "teleport_version",
           "message_of_the_day",
           "hostname",
-          "app_id_key_name"
+          "app_id_key_name",
         ],
         _defaults: {
-          claims_to_roles: []
-        }
-      })
-      assert.deepEqual(data.teleport_config, {
-        teleport_license: null,
-        https_cert: null,
-        https_key: null,
-        domain: null,
-        cos_bucket_name: null,
-        cos_key_name: null,
-        teleport_version: null,
-        message_of_the_day: null,
-        hostname: null,
-        app_id_key_name: null,
-        claims_to_roles: [],
-      }, "it should set the value")
-    })
+          claims_to_roles: [],
+        },
+      });
+      assert.deepEqual(
+        data.teleport_config,
+        {
+          teleport_license: null,
+          https_cert: null,
+          https_key: null,
+          domain: null,
+          cos_bucket_name: null,
+          cos_key_name: null,
+          teleport_version: null,
+          message_of_the_day: null,
+          hostname: null,
+          app_id_key_name: null,
+          claims_to_roles: [],
+        },
+        "it should set the value"
+      );
+    });
   });
   describe("then", () => {
     it("should invoke callback with data", () => {
@@ -491,6 +495,26 @@ describe("get object data from chain", () => {
         false,
         "it should set to false"
       );
+    });
+  });
+  describe("done", () => {
+    it("should throw an error if done is not set", () => {
+      let data = new revision({});
+      let task = () => data.done();
+      assert.throws(
+        task,
+        "revision expected revision.setDoneCallback to be initialized before done is called"
+      );
+    });
+    describe("setDoneCallback", () => {
+      it("should set done callback and run the done function", () => {
+        let test = false;
+        let callback = (data) => {
+          if (data) test = true;
+        };
+        new revision({}).setDoneCallback(callback).done();
+        assert.isTrue(test, "it should set to true");
+      });
     });
   });
 });

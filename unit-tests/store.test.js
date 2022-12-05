@@ -254,5 +254,25 @@ describe("store", () => {
         assert.isTrue(slz.frog !== null, "it should not be null");
       });
     });
+    describe("reviseStore", () => {
+      it("should revise data and run update function when done is called", () => {
+        let slz = new lazyZstate();
+        let expectedData = {
+          frog: {
+            foo: "bar",
+          },
+        };
+        let updateSpy = new sinon.spy();
+        slz.setUpdateCallback(() => {});
+        slz.updateFunctions.push(updateSpy);
+        slz.reviseStore().set("frog", { foo: "bar" }).done();
+        assert.deepEqual(
+          slz.store,
+          expectedData,
+          "it should have the correct data"
+        );
+        assert.isTrue(updateSpy.calledOnce, "it should be called");
+      });
+    });
   });
 });
