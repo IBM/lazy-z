@@ -77,7 +77,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 10. [Array Methods](#array-methods)
    - [numberStringList](#numberStringList)
    - [flatten](#flatten)
-11. [lazyZstore](#lazyzstore)
+11. [lazyZstate](#lazyZstate)
 12. [Contributing](#contributing)
 13. [Code Test Coverage](#code-test-coverage)
 
@@ -573,9 +573,11 @@ Returns all distinct entries in an array
 ```js
 const { disctinct } = require("lazy-z");
 
-distinct(["c", "a", "b", "b", "a", "g", "e"])[
-  // returns
-  ("c", "a", "b", "g", "e")
+distinct(["c", "a", "b", "b", "a", "g", "e"])
+
+// returns
+[
+  "c", "a", "b", "g", "e"
 ];
 ```
 
@@ -1613,6 +1615,120 @@ flatten(testData)[
   // returns
   ("one", "two", "three", "four", "five", "six", "seven")
 ];
+```
+
+---
+
+## lazyZstate
+
+Lazy Z state is a state store constructor used for maniuplating complex objects.
+
+### lazyZstate initialization
+
+```js
+/**
+ * state constructor object
+ * @param {object=} defaults defaults for store data
+ * @param {object=} defaults._defaults key value pairs of default values for store
+ * @param {Array<string>=} defaults._no_default list of values in store to set to `null`
+ * @param {object=} store arbitrary key value pairs to add to store object. values are added after defaults
+ */
+
+let state = new lazyZstate(defaults, store);
+```
+
+#### Example Usage
+
+```js
+const = { lazyZstate } = require("lazy-z");
+
+
+// with no store
+let state = new lazyZstate({
+  _defaults: {
+    frog: true,
+    numbers: [1, 2, 3, 4],
+    data: {
+      foo: "baz",
+    },
+  },
+  _no_default: ["todd"],
+})
+
+// state.store value
+{
+  frog: true,
+  numbers: [1, 2, 3, 4],
+  data: {
+    foo: "baz",
+  },
+  todd: null,
+}
+
+// with store
+
+let stateWithStore = new lazyZstate(
+  {
+    _defaults: {
+      frog: true,
+      numbers: [1, 2, 3, 4],
+      data: {
+        foo: "baz",
+      },
+    },
+    _no_default: ["todd"],
+  },
+  {
+    frog: "yes",
+    hi: "mom",
+  }
+)
+
+// stateWithStore.store value
+{
+  frog: "yes",
+  numbers: [1, 2, 3, 4],
+  data: {
+    foo: "baz",
+  },
+  todd: null,
+  hi: "mom",
+}
+```
+
+### lazyZstate Store Template
+
+lazyZstate uses a template to create functions to initialize and update store fields and state methods. To create a field, use the `lazyZstate.newField` constructor function.
+
+### lazyZstate.setUpdateCallback
+
+Set an update callback function to run when state data is changed
+
+```js
+/**
+ * Set update callback. This function will be run when components update
+ * @param {Function} callback callback function
+ */
+lazyZstate.setUpdateCallback = function (callback) {
+  paramTest(`state.setUpdateCallback`, "callback", "Function", callback);
+  this.updateCallback = callback;
+};
+```
+
+#### Example Usage
+
+```js
+const = { lazyZstate } = require("lazy-z");
+
+let state = new lazyZstate();
+let callback = () => {
+  console.log("hi");
+};
+slz.setUpdateCallback(callback);
+slz.update();
+
+// on update logs
+`hi`
 ```
 
 ---
