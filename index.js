@@ -6,5 +6,7 @@ module.exports = {
   ...require("./lib/encode"),
   ...require("./lib/objects"),
   ...require("./lib/revision"),
+  ...require("./lib/arrays"),
+  ...require("./lib/numbers"),
   ...require("./lib/store").lazyZstate
 };
