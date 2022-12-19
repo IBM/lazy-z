@@ -1747,11 +1747,11 @@ The mock axios constructor can be initialized with two parameters:
 ### Example Usage
 
 ```js
-const mockAxios = require("../lib/axios-mocks");
+const { initMockAxios } = require("lazy-z");
 
 describe("axios", () => {
   it("should return a promise when called with params on resolve", () => {
-    let { axios } = mockAxios({ data: true }); // successful promise
+    let { axios } = initMockAxios({ data: true }); // successful promise
     // axios method
     return axios({ params: "yes" }).then((data) => {
       assert.isTrue(data.data.data, "it should be true");
@@ -1778,7 +1778,7 @@ describe("axios", () => {
     });
   });
   it("should reject when error is true", () => {
-    let { axios } = mockAxios({ data: true }, true); // unsuccessful promise
+    let { axios } = initMockAxios({ data: true }, true); // unsuccessful promise
     return axios({ params: "yes" }).catch((data) => {
       assert.isTrue(data.data, "it should be true");
     });
