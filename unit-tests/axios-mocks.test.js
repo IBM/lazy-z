@@ -1,5 +1,4 @@
 const { assert } = require("chai");
-const sinon = require("sinon");
 const mockAxios = require("../lib/axios-mocks");
 
 describe("axios", () => {
