@@ -78,6 +78,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [numberStringList](#numberStringList)
    - [flatten](#flatten)
 11. [lazyZstate](#lazyZstate)
+12. [axios mocks](#axios-mocks)
 12. [Contributing](#contributing)
 13. [Code Test Coverage](#code-test-coverage)
 
@@ -1730,6 +1731,62 @@ slz.update();
 // on update logs
 `hi`
 ```
+
+---
+
+## Axios Mocks
+
+`lazy-z` provides a test framework for creating mock [axios](https://www.npmjs.com/package/axios) calls. 
+
+### Initializing the Constructor
+
+The mock axios constructor can be initialized with two parameters:
+- `data` - an arbitrary object of data to be returned when the promise resolves
+- `err` - an optional boolean. By setting this value to true, the data passed in as `data` will be sent on rejection instead of resolve.
+
+### Example Usage
+
+```js
+const mockAxios = require("../lib/axios-mocks");
+
+describe("axios", () => {
+  it("should return a promise when called with params on resolve", () => {
+    let { axios } = mockAxios({ data: true }); // successful promise
+    // axios method
+    return axios({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+    // axios.get method
+    return axios.get({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+    // axios.post method
+    return axios.post({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+    // axios.put method
+    return axios.put({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+    // axios.patch method
+    return axios.patch({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+    // axios.delete method
+    return axios.delete({ params: "yes" }).then((data) => {
+      assert.isTrue(data.data.data, "it should be true");
+    });
+  });
+  it("should reject when error is true", () => {
+    let { axios } = mockAxios({ data: true }, true); // unsuccessful promise
+    return axios({ params: "yes" }).catch((data) => {
+      assert.isTrue(data.data, "it should be true");
+    });
+  });  
+});
+```
+
+
 
 ---
 

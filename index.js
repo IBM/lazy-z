@@ -8,5 +8,6 @@ module.exports = {
   ...require("./lib/revision"),
   ...require("./lib/arrays"),
   ...require("./lib/numbers"),
-  ...require("./lib/store").lazyZstate
+  ...require("./lib/store").lazyZstate,
+  ...require("./lib/axios-mocks")
 };
