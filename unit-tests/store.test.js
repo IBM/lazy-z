@@ -274,5 +274,15 @@ describe("store", () => {
         assert.isTrue(updateSpy.calledOnce, "it should be called");
       });
     });
+    describe("everything", () => {
+      it("should revise correctly with no error thrown", () => {
+        let store = new lazyZstate();
+        store.setUpdateCallback(() => {});
+        let task = () => {
+          store.reviseStore().done();
+        };
+        assert.doesNotThrow(task, "it should not throw");
+      });
+    });
   });
 });
