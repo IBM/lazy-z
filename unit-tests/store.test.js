@@ -173,6 +173,13 @@ describe("store", () => {
         let expectedData = {};
         assert.deepEqual(actualData, expectedData, "it should be empty object");
       });
+      it("should create a store with an sendErrorCallback if set in options", () => {
+        let actualData = new lazyZstate(
+          {}, // defaults
+          {}, // store
+          { sendErrorCallback: () => {} }
+        );
+      });
     });
     describe("setUpdateCallback", () => {
       it("should set the update callback", () => {
