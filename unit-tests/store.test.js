@@ -174,11 +174,12 @@ describe("store", () => {
         assert.deepEqual(actualData, expectedData, "it should be empty object");
       });
       it("should create a store with an sendErrorCallback if set in options", () => {
-        let actualData = new lazyZstate(
-          {}, // defaults
+        let store = new lazyZstate(
+          { _no_default: ["todd"] }, // defaults
           {}, // store
           { sendErrorCallback: () => {} }
         );
+        assert.hasAnyKeys(store, "sendErrorCallback"); // ensure this key is added
       });
     });
     describe("setUpdateCallback", () => {
