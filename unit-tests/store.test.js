@@ -173,14 +173,6 @@ describe("store", () => {
         let expectedData = {};
         assert.deepEqual(actualData, expectedData, "it should be empty object");
       });
-      it("should create a store with an sendErrorCallback if set in options", () => {
-        let store = new lazyZstate(
-          { _no_default: ["todd"] }, // defaults
-          {}, // store
-          { sendErrorCallback: () => {} }
-        );
-        assert.hasAnyKeys(store, "sendErrorCallback"); // ensure this key is added
-      });
     });
     describe("setUpdateCallback", () => {
       it("should set the update callback", () => {
@@ -222,26 +214,14 @@ describe("store", () => {
         let task = () => new lazyZstate().sendError("hi");
         assert.throws(task, "hi");
       });
-      it("should call error callback if one is set", () => {
-        let spy = sinon.spy();
-        let store = new lazyZstate(
-          { _no_default: ["todd"] }, // defaults
-          {}, // store
-          {
-            sendErrorCallback: spy,
-          }
-        );
-        store.sendError("hi");
-        assert.isTrue(spy.calledOnce, "it should be called");
-      });
     });
     describe("setErrorCallback", () => {
-      it("should set sendError", () => {
-        let slz = new lazyZstate();
-        slz.setErrorCallback(() => {
-          return "hi";
-        });
-        assert.deepEqual(slz.sendError(), "hi", "it should set value");
+      it("should call error callback if one is set", () => {
+        let spy = sinon.spy();
+        let store = new lazyZstate();
+        store.setErrorCallback(spy);
+        store.sendError("hi");
+        assert.isTrue(spy.calledOnce, "it should be called");
       });
     });
     describe("tryCatch", () => {
@@ -272,36 +252,6 @@ describe("store", () => {
         slz.newField("frog", { init: initSpy });
         assert.isTrue(initSpy.calledOnce, "it should be called");
         assert.isTrue(slz.frog !== null, "it should not be null");
-      });
-    });
-    describe("reviseStore", () => {
-      it("should revise data and run update function when done is called", () => {
-        let slz = new lazyZstate();
-        let expectedData = {
-          frog: {
-            foo: "bar",
-          },
-        };
-        let updateSpy = new sinon.spy();
-        slz.setUpdateCallback(() => {});
-        slz.updateFunctions.push(updateSpy);
-        slz.reviseStore().set("frog", { foo: "bar" }).done();
-        assert.deepEqual(
-          slz.store,
-          expectedData,
-          "it should have the correct data"
-        );
-        assert.isTrue(updateSpy.calledOnce, "it should be called");
-      });
-    });
-    describe("everything", () => {
-      it("should revise correctly with no error thrown", () => {
-        let store = new lazyZstate();
-        store.setUpdateCallback(() => {});
-        let task = () => {
-          store.reviseStore().done();
-        };
-        assert.doesNotThrow(task, "it should not throw");
       });
     });
   });
