@@ -75,12 +75,14 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [getVerbActions](#getVerbActions)
    - [replaceOptionalFlags](#replaceoptionalflags)
 10. [Array Methods](#array-methods)
-   - [numberStringList](#numberStringList)
-   - [flatten](#flatten)
+
+- [numberStringList](#numberStringList)
+- [flatten](#flatten)
+
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
-12. [Contributing](#contributing)
-13. [Code Test Coverage](#code-test-coverage)
+13. [Contributing](#contributing)
+14. [Code Test Coverage](#code-test-coverage)
 
 ---
 
@@ -463,7 +465,6 @@ let testData = {
 new revision(testData).updateEachChild("friends", (friend) => {
   friend.high_score = 0;
 });
-
 ```
 
 ### revision.updateEachNestedChild
@@ -473,19 +474,25 @@ Update each nested child within any depth of arrays.
 ```js
 const { revision } = require("lazy-z");
 let testData = {
-  a: [{
-      b: [{
-        c: [{ test: "true" }]
-      }]
+  a: [
+    {
+      b: [
+        {
+          c: [{ test: "true" }],
+        },
+      ],
     },
     {
-      b: [{
-        c: [{ test: "true" }]
-      },{
-        c: [{ test: "true" }],
-      }]
-    }
-  ]
+      b: [
+        {
+          c: [{ test: "true" }],
+        },
+        {
+          c: [{ test: "true" }],
+        },
+      ],
+    },
+  ],
 };
 
 new revision(testData).updateEachNestedChild(["a", "b", "c"], (entry) => {
@@ -494,19 +501,25 @@ new revision(testData).updateEachNestedChild(["a", "b", "c"], (entry) => {
 
 // updates test data value to
 {
-  a: [{
-      b: [{
-        c: [{ test: false }]
-      }]
+  a: [
+    {
+      b: [
+        {
+          c: [{ test: false }],
+        },
+      ],
     },
     {
-      b: [{
-        c: [{ test: false }]
-      },{
-        c: [{ test: false }],
-      }]
-    }
-  ]
+      b: [
+        {
+          c: [{ test: false }],
+        },
+        {
+          c: [{ test: false }],
+        },
+      ],
+    },
+  ];
 }
 ```
 
@@ -563,8 +576,8 @@ Check to see if two values have all fields equal.
 ```js
 const { deepEqual } = require("lazy-z");
 
-deepEqual({ foo: "bar" }, { foo: "baz" }) // returns false
-deepEqual({ foo: "bar" }, { foo: "bar" }) // returns true
+deepEqual({ foo: "bar" }, { foo: "baz" }); // returns false
+deepEqual({ foo: "bar" }, { foo: "bar" }); // returns true
 ```
 
 ### distinct
@@ -574,11 +587,9 @@ Returns all distinct entries in an array
 ```js
 const { disctinct } = require("lazy-z");
 
-distinct(["c", "a", "b", "b", "a", "g", "e"])
-
-// returns
-[
-  "c", "a", "b", "g", "e"
+distinct(["c", "a", "b", "b", "a", "g", "e"])[
+  // returns
+  ("c", "a", "b", "g", "e")
 ];
 ```
 
@@ -796,7 +807,7 @@ containsCheck(
   "should contain the number 4",
   ["frog", "string", "egg"],
   "4"
-)// throws
+) // throws
 `should contain the number 4 got ["frog", "string", "egg"]`;
 ```
 
@@ -807,7 +818,10 @@ Test to see if an array is empty. Throw an error if it is.
 ```js
 const { emptyCheck } = require("lazy-z");
 
-emptyCheck("array should not be empty", [])// throws
+emptyCheck(
+  "array should not be empty",
+  []
+) // throws
 `array should not be empty`;
 ```
 
@@ -895,7 +909,6 @@ typeCheck(
 ## String Methods
 
 Methods for dealing with strings
-
 
 ### camelCase
 
@@ -991,7 +1004,7 @@ stringify(
 
 ### titleCase
 
-Format a string from from `all-caps-with-spaces` to `All Caps With Spaces` 
+Format a string from from `all-caps-with-spaces` to `All Caps With Spaces`
 
 ```js
 const { titleCase } = require("lazy-z");
@@ -1018,32 +1031,31 @@ const { isInRange } = require("lazy-z");
 
 isInRange(1.5, 1, 2); // value, min, max
 // returns
-true
+true;
 ```
 
 ### validPortRange
 
-Check if a port range is valid. 
+Check if a port range is valid.
 
 ```js
 const { validPortRange } = require("lazy-z");
 
 validPortRange(
   // can be one of ["type","code","port_min","port_max","source_port_min","source_port_max"]
-  "port_min", 
+  "port_min",
   8080
-)
+);
 // returns
-true
+true;
 
 validPortRange(
   // can be one of ["type","code","port_min","port_max","source_port_min","source_port_max"]
-  "type", 
+  "type",
   257
-)
+);
 // returns
-false
-
+false;
 ```
 
 ---
@@ -1244,8 +1256,7 @@ splatContains(
   ],
   "name",
   "egg"
-)
-
+);
 ```
 
 ### spreadKeyValues
@@ -1591,11 +1602,11 @@ const { numberStringList } = require("lazy-z");
 
 numberStringList(5);
 // returns
-["0", "1", "2","3", "4"];
+["0", "1", "2", "3", "4"];
 
-numberStringList(5,1);
+numberStringList(5, 1);
 // returns
-["1", "2","3", "4", "5"];
+["1", "2", "3", "4", "5"];
 ```
 
 ### flatten
@@ -1725,22 +1736,87 @@ let state = new lazyZstate();
 let callback = () => {
   console.log("hi");
 };
-slz.setUpdateCallback(callback);
-slz.update();
+state.setUpdateCallback(callback);
+state.update();
 
 // on update logs
 `hi`
+```
+
+### lazyZstate.sendError
+
+Logs errors to the console, if an error callback is set, runs it, otherwise throws the error as well
+
+```js
+/**
+ * send an error
+ * @param {Error} err error
+ * @throws when message provided
+ */
+this.sendError = function (err) {
+  console.error(err);
+  if (this.sendErrorCallback) this.sendErrorCallback(err);
+  else throw new Error(err);
+};
+```
+
+#### Example Usage
+
+```js
+const = { lazyZstate } = require("lazy-z");
+
+let state = new lazyZstate();
+state.sendError("error");
+
+// errors
+`error`
+// throws
+`Error: error`
+```
+
+### lazyZstate.setErrorCallback
+
+Set an error callback function to run when an error is sent
+
+```js
+/**
+ * set callback for error handling
+ * @param {setErrorCallback} callback callback function
+ */
+this.setErrorCallback = function (callback) {
+  paramTest(`lazyZstate.setErrorCallback`, "callback", "Function", callback);
+  this.sendErrorCallback = callback;
+};
+```
+
+#### Example Usage
+
+```js
+const = { lazyZstate } = require("lazy-z");
+
+let state = new lazyZstate();
+let callback = () => {
+  console.log("hi from callback");
+};
+state.setErrorCallback(callback);
+state.sendError();
+
+// errors
+`hi`
+// logs
+`hi from callback`
 ```
 
 ---
 
 ## Axios Mocks
 
-`lazy-z` provides a test framework for creating mock [axios](https://www.npmjs.com/package/axios) calls. 
+`lazy-z` provides a test framework for creating mock [axios](https://www.npmjs.com/package/axios) calls.
 
 ### Initializing the Constructor
 
 The mock axios constructor can be initialized with two parameters:
+
 - `data` - an arbitrary object of data to be returned when the promise resolves
 - `err` - an optional boolean. By setting this value to true, the data passed in as `data` will be sent on rejection instead of resolve.
 
@@ -1782,11 +1858,9 @@ describe("axios", () => {
     return axios({ params: "yes" }).catch((data) => {
       assert.isTrue(data.data, "it should be true");
     });
-  });  
+  });
 });
 ```
-
-
 
 ---
 

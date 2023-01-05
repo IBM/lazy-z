@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 1.7
 
 - sendError in `lazyZstate` now throws an error and sends an error to the console.
+- setErrorCallback now runs in sendError and does not override sendError
 
 ## 1.6.4
 
