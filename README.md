@@ -75,10 +75,8 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [getVerbActions](#getVerbActions)
    - [replaceOptionalFlags](#replaceoptionalflags)
 10. [Array Methods](#array-methods)
-
-- [numberStringList](#numberStringList)
-- [flatten](#flatten)
-
+    - [numberStringList](#numberStringList)
+    - [flatten](#flatten)
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
 13. [Contributing](#contributing)
@@ -1884,14 +1882,16 @@ example:
 
 ## Code Test Coverage
 
-| File         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
-| ------------ | ------- | -------- | ------- | ------- | ----------------- |
-| All files    | 100     | 100      | 100     | 100     | 🏆                |
-| arrays.js    | 100     | 100      | 100     | 100     | 🏆                |
-| cli-utils.js | 100     | 100      | 100     | 100     | 🏆                |
-| encode.js    | 100     | 100      | 100     | 100     | 🏆                |
-| objects.js   | 100     | 100      | 100     | 100     | 🏆                |
-| revision.js  | 100     | 100      | 100     | 100     | 🏆                |
-| shortcuts.js | 100     | 100      | 100     | 100     | 🏆                |
-| strings.js   | 100     | 100      | 100     | 100     | 🏆                |
-| values.js    | 100     | 100      | 100     | 100     | 🏆                |
+| File           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
+| -------------- | ------- | -------- | ------- | ------- | ----------------- |
+| All files      | 100     | 100      | 100     | 100     | 🏆                |
+| arrays.js      | 100     | 100      | 100     | 100     | 🏆                |
+| axios-mocks.js | 100     | 100      | 100     | 100     | 🏆                |
+| cli-utils.js   | 100     | 100      | 100     | 100     | 🏆                |
+| encode.js      | 100     | 100      | 100     | 100     | 🏆                |
+| numbers.js     | 100     | 100      | 100     | 100     | 🏆                |
+| objects.js     | 100     | 100      | 100     | 100     | 🏆                |
+| revision.js    | 100     | 100      | 100     | 100     | 🏆                |
+| shortcuts.js   | 100     | 100      | 100     | 100     | 🏆                |
+| strings.js     | 100     | 100      | 100     | 100     | 🏆                |
+| values.js      | 100     | 100      | 100     | 100     | 🏆                |
