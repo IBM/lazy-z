@@ -222,6 +222,18 @@ describe("store", () => {
         let task = () => new lazyZstate().sendError("hi");
         assert.throws(task, "hi");
       });
+      it("should call error callback if one is set", () => {
+        let spy = sinon.spy();
+        let store = new lazyZstate(
+          { _no_default: ["todd"] }, // defaults
+          {}, // store
+          {
+            sendErrorCallback: spy,
+          }
+        );
+        store.sendError("hi");
+        assert.isTrue(spy.calledOnce, "it should be called");
+      });
     });
     describe("setErrorCallback", () => {
       it("should set sendError", () => {
