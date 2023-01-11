@@ -382,6 +382,15 @@ describe("shortcuts", () => {
         "it should return correct zones"
       );
     });
+    it("should run the callback for each zone", () => {
+      let actualData = [];
+      shortcuts.eachZone(0, (zone) => actualData.push(zone));
+      assert.deepEqual(
+        actualData,
+        [],
+        "it should return correct zones"
+      );
+    });
   });
   describe("parseIntFromZone", () => {
     it("should parse int from zone", () => {
