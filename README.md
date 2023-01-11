@@ -19,11 +19,13 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
      - [updateEachNestedChild](#revisionupdateEachNestedChild)
 3. [Shortcut Methods](#shorcut-methods)
    - [azsort](#azsort)
+   - [buildNumberDropdownList](#buildNumberDropdownList)
    - [contains](#contains)
    - [containsKeys](#containskeys)
    - [deepEqual](#deepequal)
    - [distinct](#distinct)
    - [eachKey](#eachkey)
+   - [eachZone](#eachZone)
    - [isBoolean](#isBoolean)
    - [isEmpty](#isempty)
    - [isFunction](#isfunction)
@@ -33,6 +35,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [isWholeNumber](#isWholeNumber)
    - [keys](#keys)
    - [keyValueType](#keyValueType)
+   - [numberToZoneList](#numberToZoneList)
    - [objectAtFirstKey](#objectAtFirstKey)
    - [prettyJSON](#prettyjson)
    - [validIpv4Test](#validIpv4Test)
@@ -542,6 +545,19 @@ const { azsort } = require("lazy-z");
 ["egg", "frog", "help", "todd"];
 ```
 
+### buildNumberDropdownList
+
+Creates a list of numbers as a string
+
+```js
+const { buildNumberDropdownList } = require("lazy-z");
+
+buildNumberDropdownList(5)
+
+// returns
+["0", "1", "2", "3", "4"];
+```
+
 ### contains
 
 Shortcut to check if string or array contains a value
@@ -605,6 +621,18 @@ const { eachKey } = require("lazy-z");
 eachKey({ one: 1, two: 2 }, (key, index) => {
   console.log(key + " " + index);
 });
+```
+
+### eachZone
+
+Shortcut for `["zone-1", "zone-2", "zone-3"].forEach(...)`
+
+```js
+const { eachZone } = require("lazy-z")
+
+eachZone(3, zone => {
+  console.log(zone);
+})
 ```
 
 ### isBoolean
@@ -710,6 +738,17 @@ const { keyValueType } = require("lazy-z");
 keyValueType({ one: 1 }, "one");
 // returns
 ("number");
+```
+
+### numberToZoneList
+
+Get a list of zones from a number to string
+```js
+const { numberToZoneList } = require("lazy-z");
+
+numberToZoneList(3);
+// returns
+["zone-1", "zone-2", "zone-3"]
 ```
 
 ### objectAtFirstKey
