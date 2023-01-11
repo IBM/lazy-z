@@ -9,5 +9,6 @@ module.exports = {
   ...require("./lib/arrays"),
   ...require("./lib/numbers"),
   ...require("./lib/store").lazyZstate,
-  ...require("./lib/axios-mocks")
+  ...require("./lib/axios-mocks"),
+  ...require("./lib/networking")
 };
