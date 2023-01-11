@@ -79,6 +79,9 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
     - [flatten](#flatten)
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
+13. [Networking Utilities](#networking-utilities)
+  - [buildNetworkingRule](#buildnetworkingrule)
+  - [formatCidrBlock](#formatCidrBlock)
 13. [Contributing](#contributing)
 14. [Code Test Coverage](#code-test-coverage)
 
@@ -1858,6 +1861,139 @@ describe("axios", () => {
     });
   });
 });
+```
+
+---
+
+## Networking Utilities
+
+Network utilities are designed to make the automated creation of virtual networks easier.
+
+### buildNetworkingRule
+
+Create a networking rule. These networking rules are configured for use on IBM Cloud but could easily be adapted for other providers. `buildNetworkingRule` will also check to ensure that rules have valid type, code, or port ranges.
+
+```js
+/**
+ * Build a networking rule
+ * @param {Object} params networking rule params
+ * @param {string} params.name name of acl rule
+ * @param {boolean} params.allow true to allow, false to deny
+ * @param {boolean} params.inbound true for inbound, false for outbound
+ * @param {string} params.source cidr block or ip
+ * @param {string} params.destination cidr block or ip. if creating a security group rule, use `null`
+ * @param {string=} params.ruleProtocol optional. can be one of `icmp`, `tcp`, or `udp`
+ * @param {Object=} params.rule object describing traffic rule if using rule type
+ * @param {number} params.rule.code code for icmp rules
+ * @param {number} params.rule.type code for icmp rules
+ * @param {number} params.rule.port_min port_min for tcp and udp rules
+ * @param {number} params.rule.port_max port_max for tcp and udp rules
+ * @param {number} params.rule.source_port_min source_port_min for tcp and udp rules
+ * @param {number} params.rule.source_port_max source_port_max for tcp and udp rules
+ * @param {boolean=} isAcl is acl rule, false if is security group
+ * @returns {Object} network acl object
+ */
+function buildNetworkingRule(params, isAcl)
+```
+
+#### Example Usage
+
+```js
+
+// security group rule
+buildNetworkingRule({
+  name: "allow-ibm-inbound",
+  allow: true,
+  inbound: true,
+  source: "161.26.0.0/16",
+  destination: "10.0.0.0/8",
+  ruleProtocol: "tcp",
+  rule: {
+    port_max: 443,
+    port_min: 443,
+  }
+});
+
+// returns
+{
+  direction: "inbound",
+  name: "allow-ibm-inbound",
+  source: "161.26.0.0/16",
+  icmp: {
+    type: null,
+    code: null,
+  },
+  tcp: {
+    port_min: 443,
+    port_max: 443,
+  },
+  udp: {
+    port_min: null,
+    port_max: null,
+  },
+}
+
+// acl rule
+buildNetworkingRule({
+  name: "allow-ibm-inbound",
+  allow: true,
+  inbound: true,
+  source: "161.26.0.0/16",
+  destination: "10.0.0.0/8",
+},true);
+
+// returns
+{
+  action: "allow",
+  destination: "10.0.0.0/8",
+  direction: "inbound",
+  name: "allow-ibm-inbound",
+  source: "161.26.0.0/16",
+  icmp: {
+    type: null,
+    code: null,
+  },
+  tcp: {
+    port_min: null,
+    port_max: null,
+    source_port_min: null,
+    source_port_max: null,
+  },
+  udp: {
+    port_min: null,
+    port_max: null,
+    source_port_min: null,
+    source_port_max: null,
+  }
+}
+```
+
+### formatCidrBlock
+
+Create a dynamic CIDR block
+
+```js
+/**
+ * format a cidr block with 256 ips to be calculated programatticaly
+ * @param {number} vpc index of vpc within architecture
+ * @param {number} zone zone, can be 1, 2, or 3
+ * @param {number} tier index of subnet tier
+ * @param {boolean=} isEdge is edge network
+ * @returns {string} network cidr
+ */
+function formatCidrBlock(vpc, zone, tier, isEdge)
+```
+
+#### Example Usage
+
+```js
+formatCidrBlock(0, 1, 0)
+// returns
+"10.10.10.0/24"
+
+formatCidrBlock(0, 1, 0, true)
+// returns
+"10.5.10.0/24"
 ```
 
 ---
