@@ -95,9 +95,6 @@ describe("store", () => {
       assert.deepEqual(actualData, expectedData, "it should set after init");
     });
     it("should initialize onStoreUpdate when passed", () => {
-      let expectedData = {
-        frog: {},
-      };
       let actualData = {
         updateFunctions: [],
         tryCatch: function (callback) {
@@ -242,6 +239,14 @@ describe("store", () => {
           slz.tryCatch(() => {
             return "hi";
           });
+        assert.doesNotThrow(task, "it should not throw");
+      });
+      it("should not throw if function runs successfully and onstore update", () => {
+        let slz = new lazyZstate();
+        let task = () =>
+          slz.tryCatch(() => {
+            return "hi";
+          }, true);
         assert.doesNotThrow(task, "it should not throw");
       });
     });

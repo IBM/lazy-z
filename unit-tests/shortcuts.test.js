@@ -134,9 +134,9 @@ describe("shortcuts", () => {
       assert.isFalse(actualData, "it should be false");
     });
     it("should return true if ipv4 address", () => {
-      let actualData = isIpv4CidrOrAddress("1.2.3.4")
-      assert.isTrue(actualData, "it should be true")
-    })
+      let actualData = isIpv4CidrOrAddress("1.2.3.4");
+      assert.isTrue(actualData, "it should be true");
+    });
   });
   describe("isNullOrEmptyString", () => {
     it("should return true if null", () => {
@@ -358,6 +358,56 @@ describe("shortcuts", () => {
     });
     it("should return false for not whole number", () => {
       assert.isFalse(shortcuts.isWholeNumber(1.2), "it should be false");
+    });
+  });
+  describe("numberToZoneList", () => {
+    it("should return correct zones", () => {
+      let expectedData = ["zone-1", "zone-2", "zone-3"];
+      let actualData = shortcuts.numberToZoneList(3);
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should return correct zones"
+      );
+    });
+  });
+  describe("eachZone", () => {
+    it("should run the callback for each zone", () => {
+      let expectedData = ["zone-1", "zone-2", "zone-3"];
+      let actualData = [];
+      shortcuts.eachZone(3, (zone) => actualData.push(zone));
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should return correct zones"
+      );
+    });
+  });
+  describe("parseIntFromZone", () => {
+    it("should parse int from zone", () => {
+      let expectedData = 3;
+      let actualData = shortcuts.parseIntFromZone("test-zone-3");
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should return correct zone number"
+      );
+    });
+  });
+  describe("buildNumberDropdownList", () => {
+    it("should return list with no add", () => {
+      assert.deepEqual(
+        shortcuts.buildNumberDropdownList(2),
+        ["0", "1"],
+        "it should return list"
+      );
+    });
+    it("should return list with add", () => {
+      assert.deepEqual(
+        shortcuts.buildNumberDropdownList(2, 1),
+        ["1", "2"],
+        "it should return list"
+      );
     });
   });
 });
