@@ -45,6 +45,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [keyCheck](#keyCheck)
    - [keyTest](#keytest)
    - [typeCheck](#typecheck)
+   - [zoneTest](#zonetest)
 5. [String Methods](#string-methods)
    - [camelCase](#camelcase)
    - [capitalize](#capitalize)
@@ -903,6 +904,18 @@ typeCheck(
   1
 ) // throws an error
 `expects value to be type string got number`;
+```
+
+### zoneTest
+
+Checks to see if a zone number is 1, 2, or 3. Throws an error if it is not.
+
+```js
+const { zoneTest } = require("lazy-z");
+
+zoneTest(4)
+// throws an error
+"Zone must be 1, 2, or 3."
 ```
 
 ---
