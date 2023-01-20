@@ -178,6 +178,13 @@ describe("string functions", () => {
         "it should return data in correct case"
       );
     });
+    it("should return string with number", () => {
+      assert.deepEqual(
+        utils.titleCase(`string-value-1`),
+        "String Value 1",
+        "it should return correct case"
+      )
+    })
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.titleCase(false),

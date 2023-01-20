@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.8.3
+- `titleCase` now formats numbers correctly
+
 ## 1.7
 
 - sendError in `lazyZstate` now throws an error and sends an error to the console.
