@@ -25,6 +25,15 @@ describe("networking", () => {
         "it should create correct cidr block"
       );
     });
+        it("should format the CIDR block for vpc", () => {
+      let actualData = formatCidrBlock(0, 2, 2);
+      let expectedData = "10.30.20.0/24";
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should create correct cidr block"
+      );
+    });
   });
   describe("buildNetworkingRule", () => {
     it("should build the correct rule with no protocol for acl", () => {
