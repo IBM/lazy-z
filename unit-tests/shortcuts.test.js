@@ -385,11 +385,7 @@ describe("shortcuts", () => {
     it("should run the callback for each zone", () => {
       let actualData = [];
       shortcuts.eachZone(0, (zone) => actualData.push(zone));
-      assert.deepEqual(
-        actualData,
-        [],
-        "it should return correct zones"
-      );
+      assert.deepEqual(actualData, [], "it should return correct zones");
     });
   });
   describe("parseIntFromZone", () => {
@@ -417,6 +413,17 @@ describe("shortcuts", () => {
         ["1", "2"],
         "it should return list"
       );
+    });
+  });
+  describe("isArrayOfObjects", () => {
+    it("should return true if array of objects", () => {
+      assert.isTrue(shortcuts.isArrayOfObjects([{}, {}]), "it should be true");
+    });
+    it("should return false if not array of objects", () => {
+      assert.isFalse(shortcuts.isArrayOfObjects([]), "it should be true");
+    });
+    it("should return false if not array of objects", () => {
+      assert.isFalse(shortcuts.isArrayOfObjects(), "it should be true");
     });
   });
 });

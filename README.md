@@ -26,6 +26,8 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [distinct](#distinct)
    - [eachKey](#eachkey)
    - [eachZone](#eachZone)
+   - [isArray](#isarray)
+   - [isArrayOfObjects](#isarrayofobjects)
    - [isBoolean](#isBoolean)
    - [isEmpty](#isempty)
    - [isFunction](#isfunction)
@@ -634,6 +636,29 @@ eachZone(3, zone => {
   console.log(zone);
 })
 ```
+
+### isArray
+
+Test if a value is an Array
+
+```js
+const { isArray } = require("lazy-z");
+
+isArray([]); // returns true
+isArray("item"); // returns false
+```
+
+### isArrayOfObjects
+
+Test if a value is an Array of Objects
+
+```js
+const { isArrayOfObjects } = require("lazy-z");
+
+isArrayOfObjects([{ hi: "mom"}]); // returns true
+isArrayOfObjects("item"); // returns false
+```
+
 
 ### isBoolean
 
