@@ -1,5 +1,10 @@
 const { assert } = require("chai");
-const { flatten, numberStringList } = require("../lib/arrays");
+const {
+  flatten,
+  numberStringList,
+  nestedSplat,
+  deleteUnfoundArrayItems,
+} = require("../lib/arrays");
 
 describe("arrays", () => {
   describe("flatten", () => {
@@ -36,6 +41,58 @@ describe("arrays", () => {
         numberStringList(3, 1),
         ["1", "2", "3"],
         "it should return a list"
+      );
+    });
+  });
+  describe("nestedSplat", () => {
+    it("should return a list of names from an array within an array", () => {
+      let actualData = nestedSplat(
+        [
+          {
+            name: "foo",
+            items: [
+              {
+                name: "item-1",
+              },
+              {
+                name: "item-2",
+              },
+            ],
+          },
+          {
+            name: "bar",
+            items: [
+              {
+                name: "item-3",
+              },
+              {
+                name: "item-4",
+              },
+            ],
+          },
+        ],
+        "items",
+        "name"
+      );
+      let expectedData = ["item-1", "item-2", "item-3", "item-4"];
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should return correct array"
+      );
+    });
+  });
+  describe("deleteUnfoundArrayItems", () => {
+    it("should remove unfound items", () => {
+      let actualData = deleteUnfoundArrayItems(
+        ["foo", "bar", "baz"],
+        ["baz", "bork"]
+      );
+      let expectedData = ["baz"];
+      assert.deepEqual(
+        actualData,
+        expectedData,
+        "it should return correct array"
       );
     });
   });

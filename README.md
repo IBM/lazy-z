@@ -83,6 +83,8 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
 10. [Array Methods](#array-methods)
     - [numberStringList](#numberStringList)
     - [flatten](#flatten)
+    - [nestedSplat](#nestedSplat)
+    - [deleteUnfoundArrayItems](#deleteUnfoundArrayItems)
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
 13. [Networking Utilities](#networking-utilities)
@@ -1705,6 +1707,62 @@ flatten(testData)[
   // returns
   ("one", "two", "three", "four", "five", "six", "seven")
 ];
+```
+
+### nestedSplat
+
+Get a list of values from an array of objects insive an array of objects.
+
+```js
+const { nestedSplat } = require("lazy-z");
+
+nestedSplat(
+  [
+    {
+      name: "foo",
+      items: [
+        {
+          name: "item-1",
+        },
+        {
+          name: "item-2",
+        },
+      ],
+    },
+    {
+      name: "bar",
+      items: [
+        {
+          name: "item-3",
+        },
+        {
+          name: "item-4",
+        },
+      ],
+    },
+  ],
+  "items",
+  "name"
+);
+
+// returns
+["item-1", "item-2", "item-3", "item-4"]
+```
+
+### deleteUnfoundArrayItems
+
+delete unfound items from an array of strings
+
+```js
+const { deleteUnfoundArrayItems } = require("lazy-z");
+
+deleteUnfoundArrayItems(
+  ["foo", "bar", "baz"], // all items
+  ["baz", "bork"] // items to return if found
+)
+
+// returns
+["baz"]
 ```
 
 ---
