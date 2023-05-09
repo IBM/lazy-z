@@ -547,6 +547,144 @@ describe("store", () => {
         );
       });
     });
+    describe("carve", () => {
+      it("should remove a child object of array in store when fields array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [
+            {
+              name: "test",
+              foo: "bar",
+            },
+          ],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.carve(["json", "list"], "test");
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              list: [],
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should remove a child object of array in store when fields array when index is not name", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [
+            {
+              id: "test",
+              foo: "bar",
+            },
+          ],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.carve(["json", "list"], "test", "id");
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              list: [],
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should remove a child object of array in store when fields deep array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          test: {
+            list: [
+              {
+                name: "test",
+                foo: "bar",
+              },
+            ],
+          },
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.carve(["json", "test", "list"], "test");
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              test: {
+                list: [],
+              },
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should remove a child object of array in store when fields string", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            name: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.carve("list", "test");
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [],
+          },
+          "it should push to store"
+        );
+      });
+      it("should remove a child object of array in store when fields string and index is not name", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            id: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.carve("list", "test", "id");
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [],
+          },
+          "it should push to store"
+        );
+      });
+      it("should throw an error if field is not string or array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let task = () => slz.carve(2, "item");
+        assert.throws(
+          task,
+          "lazyZstore.carve expects fields to be either string or array of strings, got number"
+        );
+      });
+    });
     describe("setUnfound", () => {
       it("should throw an error if the list is not of strings", () => {
         let slz = new lazyZstate();
