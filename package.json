@@ -1,6 +1,6 @@
 {
   "name": "lazy-z",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,9 @@
   },
   "dependencies": {
     "regex-but-with-words": "^1.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/lazy-z.git"
   }
 }
