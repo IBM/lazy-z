@@ -303,6 +303,250 @@ describe("store", () => {
         );
       });
     });
+    describe("updateChild", () => {
+      it("should update a child object of array in store when fields array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [
+            {
+              name: "test",
+              foo: "bar",
+            },
+          ],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(["json", "list"], "test", {
+          foo: "baz",
+        });
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              list: [
+                {
+                  name: "test",
+                  foo: "baz",
+                },
+              ],
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should update a child object of array in store when fields array and looking up field other than name", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [
+            {
+              id: "test",
+              foo: "bar",
+            },
+          ],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(
+          ["json", "list"],
+          "test",
+          {
+            foo: "baz",
+          },
+          "id"
+        );
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              list: [
+                {
+                  id: "test",
+                  foo: "baz",
+                },
+              ],
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should update a child object of array in store when fields is deep array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          test: {
+            list: [
+              {
+                name: "test",
+                foo: "bar",
+              },
+            ],
+          },
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(["json", "test", "list"], "test", {
+          foo: "baz",
+        });
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              test: {
+                list: [
+                  {
+                    name: "test",
+                    foo: "baz",
+                  },
+                ],
+              },
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should update a child object of array in store when fields is string", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            name: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild("list", "test", {
+          foo: "baz",
+        });
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [
+              {
+                name: "test",
+                foo: "baz",
+              },
+            ],
+          },
+          "it should update store"
+        );
+      });
+      it("should update a child object of array in store when fields is string and looking up field other than name", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            id: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(
+          "list",
+          "test",
+          {
+            foo: "baz",
+          },
+          "id"
+        );
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [
+              {
+                id: "test",
+                foo: "baz",
+              },
+            ],
+          },
+          "it should update store"
+        );
+      });
+      it("should update a child object of array in store when fields is array of one string", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            name: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(["list"], "test", {
+          foo: "baz",
+        });
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [
+              {
+                name: "test",
+                foo: "baz",
+              },
+            ],
+          },
+          "it should update store"
+        );
+      });
+      it("should update a child object of array in store when fields is string and looking up field other than name", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [
+          {
+            id: "test",
+            foo: "bar",
+          },
+        ];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.updateChild(
+          ["list"],
+          "test",
+          {
+            foo: "baz",
+          },
+          "id"
+        );
+        assert.deepEqual(
+          slz.store,
+          {
+            list: [
+              {
+                id: "test",
+                foo: "baz",
+              },
+            ],
+          },
+          "it should update store"
+        );
+      });
+      it("should throw an error if field is not string or array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let task = () => slz.updateChild(2, "item");
+        assert.throws(
+          task,
+          "lazyZstore.updateChild expects fields to be either string or array of strings, got number"
+        );
+      });
+    });
     describe("setUnfound", () => {
       it("should throw an error if the list is not of strings", () => {
         let slz = new lazyZstate();
@@ -344,7 +588,7 @@ describe("store", () => {
           frog: "three",
         };
         slz.setUnfound("test", obj, "frog");
-        assert.deepEqual(obj.frog, "three", "it should be three")
+        assert.deepEqual(obj.frog, "three", "it should be three");
       });
     });
     describe("newField", () => {
