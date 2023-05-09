@@ -1,5 +1,10 @@
 const { assert } = require("chai");
-const { isInRange, validPortRange } = require("../lib/numbers");
+const {
+  isInRange,
+  validPortRange,
+  areNotWholeNumbers,
+  haveValidRanges,
+} = require("../lib/numbers");
 
 describe("number methods", () => {
   describe("isInRange", () => {
@@ -48,6 +53,19 @@ describe("number methods", () => {
       assert.isFalse(
         validPortRange("source_port_min", 0),
         "it should be false"
+      );
+    });
+  });
+  describe("areNotWholeNumbers", () => {
+    it("should return true if any number is not whole", () => {
+      assert.isTrue(areNotWholeNumbers(1, 3, 4, 6.3), "it should be true");
+    });
+  });
+  describe("haveValidRanges", () => {
+    it("should return true if any range invalid", () => {
+      assert.isFalse(
+        haveValidRanges([1, 0, 2], [3, 1, 2]),
+        "it should return false"
       );
     });
   });

@@ -34,7 +34,6 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [isIpv4CidrOrAddress](#isIpv4CidrOrAddress)
    - [isNullOrEmptyString](#isNullOrEmptyString)
    - [isString](#isString)
-   - [isWholeNumber](#isWholeNumber)
    - [keys](#keys)
    - [keyValueType](#keyValueType)
    - [numberToZoneList](#numberToZoneList)
@@ -62,7 +61,10 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [titleCase](#titlecase)
 6. [Number Methods](#number-methods)
    - [isInRange](#isinrange)
+   - [haveValidRanges](#haveValidRanges)
    - [validPortRange](#validPortRange)
+   - [isWholeNumber](#isWholeNumber)
+   - [areNotWholeNumbers](#areNotWholeNumbers)
 7. [Object Methods](#object-methods)
    - [allFieldsNull](#allFieldsNull)
    - [arraySplatIndex](#arraySplatIndex)
@@ -85,6 +87,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
     - [flatten](#flatten)
     - [nestedSplat](#nestedSplat)
     - [deleteUnfoundArrayItems](#deleteUnfoundArrayItems)
+    - [anyAreEmpty](#anyAreEmpty)
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
 13. [Networking Utilities](#networking-utilities)
@@ -743,6 +746,16 @@ isWholeNumber(1000); // returns true
 isWholeNumber(1.234); // returns false
 ```
 
+### areNotWholeNumbers
+
+Returns true if any number passed as an argument is not a whole number:
+```js
+const { areNotWholeNumbers } = require("lazy-z");
+
+areNotWholeNumbers(1000, 0, 3.2, 1); // returns true
+areNotWholeNumbers(1, 2, 3, 4, 5); // returns false
+```
+
 ### keys
 
 Get the keys of an object
@@ -1112,6 +1125,21 @@ const { isInRange } = require("lazy-z");
 isInRange(1.5, 1, 2); // value, min, max
 // returns
 true;
+```
+
+### haveValidRanges
+
+Returns `false` if any number of ranges are not valid
+```js
+const { haveValidRanges } = require("lazy-z");
+
+haveValidRanges(
+  [1, 0, 10],
+  [2, 0, 10],
+  [11, 0, 10]
+)
+// returns
+false
 ```
 
 ### validPortRange
@@ -1763,6 +1791,27 @@ deleteUnfoundArrayItems(
 
 // returns
 ["baz"]
+```
+
+---
+
+### anyAreEmpty
+
+Check any number of arrays and returns true if any are empty
+
+```js
+const { anyAreEmpty } = require("lazy-z");
+
+anyAreEmpty(
+  ["foo", "bar", "baz"], 
+  ["baz", "bork"],
+  [],
+  [false],
+  // any number of arrays can be passed as additional arguments
+)
+
+// returns
+true
 ```
 
 ---

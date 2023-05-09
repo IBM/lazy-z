@@ -4,6 +4,7 @@ const {
   numberStringList,
   nestedSplat,
   deleteUnfoundArrayItems,
+  anyAreEmpty,
 } = require("../lib/arrays");
 
 describe("arrays", () => {
@@ -94,6 +95,12 @@ describe("arrays", () => {
         expectedData,
         "it should return correct array"
       );
+    });
+  });
+  describe("anyAreEmpty", () => {
+    it("should return true if any array passed as props are empty", () => {
+      let actualData = anyAreEmpty(["frog"], []);
+      assert.isTrue(actualData, "it should return true");
     });
   });
 });
