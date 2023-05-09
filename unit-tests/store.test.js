@@ -250,6 +250,103 @@ describe("store", () => {
         assert.doesNotThrow(task, "it should not throw");
       });
     });
+    describe("push", () => {
+      it("should push to a child array in store when fields array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.push(["json", "list"], "item");
+        assert.deepEqual(
+          slz.store,
+          {
+            json: {
+              list: ["item"],
+            },
+          },
+          "it should push to store"
+        );
+      });
+      it("should push to a child array in store when fields is string", () => {
+        let slz = new lazyZstate();
+        slz.store.list = [];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.push("list", "item");
+        assert.deepEqual(
+          slz.store,
+          {
+            list: ["item"],
+          },
+          "it should push to store"
+        );
+      });
+      it("should throw an error if field is not string or array", () => {
+        let slz = new lazyZstate();
+        slz.store.json = {
+          list: [],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let task = () => slz.push(2, "item");
+        assert.throws(
+          task,
+          "lazyZstore.push expects fields to be either string or array of strings, got number"
+        );
+      });
+    });
+    describe("setUnfound", () => {
+      it("should throw an error if the list is not of strings", () => {
+        let slz = new lazyZstate();
+        slz.store.test = [[[]]];
+        slz.store.json = {
+          list: [],
+        };
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let task = () => slz.setUnfound("test", {}, "dev");
+        assert.throws(
+          task,
+          'lazyZstore expects store["test"] to be array of type string got ["Array"]'
+        );
+      });
+      it("should set value on object to null if not found", () => {
+        let slz = new lazyZstate();
+        slz.store.test = ["one", "two"];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let obj = {
+          frog: "three",
+        };
+        slz.setUnfound("test", obj, "frog");
+        assert.isNull(obj.frog, "it should set unfound value to null");
+      });
+      it("should not set value on object to null if found", () => {
+        let slz = new lazyZstate();
+        slz.store.test = ["one", "two", "three"];
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        let obj = {
+          frog: "three",
+        };
+        slz.setUnfound("test", obj, "frog");
+        assert.deepEqual(obj.frog, "three", "it should be three")
+      });
+    });
     describe("newField", () => {
       it("should initialize a new field when run", () => {
         let slz = new lazyZstate();
