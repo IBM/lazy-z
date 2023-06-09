@@ -177,6 +177,26 @@ describe("string functions", () => {
         "Caps",
         "it should return data in correct case"
       );
+      assert.deepEqual(
+        utils.titleCase(`caps 1234`),
+        "Caps 1234",
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`VPC Name`),
+        "VPC Name",
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`VPC 1234`),
+        "VPC 1234",
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`1234 VPC 1234`),
+        "1234 VPC 1234",
+        "it should return data in correct case"
+      );
     });
     it("should return string with number", () => {
       assert.deepEqual(
