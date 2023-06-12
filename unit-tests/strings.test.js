@@ -197,6 +197,16 @@ describe("string functions", () => {
         "1234 VPC 1234",
         "it should return data in correct case"
       );
+      assert.deepEqual(
+        utils.titleCase(`Transit Gateway Transit Gateway`),
+        "Transit Gateway Transit Gateway",
+        "it should return data in correct case"
+      );
+      assert.deepEqual(
+        utils.titleCase(`Transit Gateway and Transit Gateway`),
+        "Transit Gateway and Transit Gateway",
+        "it should return data in correct case"
+      );
     });
     it("should return string with number", () => {
       assert.deepEqual(
