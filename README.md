@@ -541,15 +541,25 @@ new revision(testData).updateEachNestedChild(["a", "b", "c"], (entry) => {
 
 ### azsort
 
-Callback function for the `sort` command to order strings from a to z
+Callback function for the `sort` command to order arrays from a to z
 
 ```js
 const { azsort } = require("lazy-z");
 
 ["frog", "egg", "todd", "help"].sort(azsort);
-
 // returns
 ["egg", "frog", "help", "todd"];
+
+
+[{ id: 5 }, { id: 10 }, { id: 1 }].sort((a, b) => {
+  return shortcuts.azsort(a, b, "id");
+})
+// returns
+[
+  { id: 1 },
+  { id: 5 },
+  { id: 10 }
+]
 ```
 
 ### buildNumberDropdownList

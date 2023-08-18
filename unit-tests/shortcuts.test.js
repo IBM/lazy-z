@@ -60,6 +60,18 @@ describe("shortcuts", () => {
       let actualData = shortcuts.azsort(2, 2);
       assert.deepEqual(actualData, 0, "it should return 11");
     });
+    it("should return -1 if key in object a is less than key in object b", () => {
+      let actualData = shortcuts.azsort({ id: 1 }, { id: 2 }, "id");
+      assert.deepEqual(actualData, -1, "it should return -1");
+    });
+    it("should return 1 if key in object a is greater than key in object b", () => {
+      let actualData = shortcuts.azsort({ id: 2 }, { id: 1 }, "id");
+      assert.deepEqual(actualData, 1, "it should return 1");
+    });
+    it("should return 0 if key in object a is equal to key in object b", () => {
+      let actualData = shortcuts.azsort({ id: 2 }, { id: 2 }, "id");
+      assert.deepEqual(actualData, 0, "it should return 0");
+    });
   });
   describe("distinct", () => {
     it("should remove duplicate string entries from an array of strings", () => {
