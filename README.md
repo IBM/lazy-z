@@ -18,6 +18,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
      - [updateEachChild](#revisionupdateeachchild)
      - [updateEachNestedChild](#revisionupdateEachNestedChild)
 3. [Shortcut Methods](#shorcut-methods)
+   - [azObjectSort](#azObjectSort)
    - [azsort](#azsort)
    - [buildNumberDropdownList](#buildNumberDropdownList)
    - [contains](#contains)
@@ -539,17 +540,12 @@ new revision(testData).updateEachNestedChild(["a", "b", "c"], (entry) => {
 
 ## Shorcut Methods
 
-### azsort
+### azObjectSort
 
 Callback function for the `sort` command to order arrays from a to z
 
 ```js
 const { azsort } = require("lazy-z");
-
-["frog", "egg", "todd", "help"].sort(azsort);
-// returns
-["egg", "frog", "help", "todd"];
-
 
 [{ id: 5 }, { id: 10 }, { id: 1 }].sort((a, b) => {
   return shortcuts.azsort(a, b, "id");
@@ -560,6 +556,17 @@ const { azsort } = require("lazy-z");
   { id: 5 },
   { id: 10 }
 ]
+```
+### azsort
+
+Callback function for the `sort` command to order strings from a to z
+
+```js
+const { azsort } = require("lazy-z");
+
+["frog", "egg", "todd", "help"].sort(azsort);
+// returns
+["egg", "frog", "help", "todd"];
 ```
 
 ### buildNumberDropdownList
