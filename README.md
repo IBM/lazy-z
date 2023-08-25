@@ -1208,9 +1208,8 @@ portRangeInvalid("", 1, 65535); // value, min, max
 // returns
 true;
 ```
+
 ---
-
-
 
 ## Object Methods
 
