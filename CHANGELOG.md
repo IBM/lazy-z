@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.10.5
+- Added Methods
+  - `portRangeInvalid`
+  - `rangeInvalid`
+
 ## 1.8.3
 - `titleCase` now formats numbers correctly
 

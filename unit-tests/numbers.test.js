@@ -4,6 +4,8 @@ const {
   validPortRange,
   areNotWholeNumbers,
   haveValidRanges,
+  portRangeInvalid,
+  rangeInvalid,
 } = require("../lib/numbers");
 
 describe("number methods", () => {
@@ -65,6 +67,46 @@ describe("number methods", () => {
     it("should return true if any range invalid", () => {
       assert.isFalse(
         haveValidRanges([1, 0, 2], [3, 1, 2]),
+        "it should return false"
+      );
+    });
+  });
+  describe("portRangeInvalid", () => {
+    it("should return true if port value is not a whole number ", () => {
+      assert.isTrue(
+        portRangeInvalid("code", 8080.1),
+        "it should return true"
+      );
+    });
+    it("should return true if port value is empty", () => {
+      assert.isTrue(
+        portRangeInvalid("port_max", ""),
+        "it should return true"
+      );
+    });
+    it("should return false if port range is valid", () => {
+      assert.isFalse(
+        portRangeInvalid("port_min", 3000),
+        "it should return false"
+      );
+    });
+  });
+  describe("rangeInvalid", () => {
+    it("should return true if value is not a whole number ", () => {
+      assert.isTrue(
+        rangeInvalid(0.1, 0, 5),
+        "it should return true"
+      );
+    });
+    it("should return true if value is empty", () => {
+      assert.isTrue(
+        rangeInvalid("", 0, 5),
+        "it should return true"
+      );
+    });
+    it("should return false if value is within the range", () => {
+      assert.isFalse(
+        rangeInvalid(100, 100, 101),
         "it should return false"
       );
     });
