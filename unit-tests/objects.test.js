@@ -10,6 +10,7 @@ const {
   carve,
   allFieldsNull,
   splatContains,
+  nullOrEmptyStringFields,
 } = require("../lib/objects");
 
 describe("objects", () => {
@@ -237,5 +238,31 @@ describe("objects", () => {
         "it should be false"
       );
     });
+  describe("nullorEmptyStringFields", () => {
+    it("should return true if any obj values are null", () => {
+      let obj = {"test": "one","test_2": null,"test_3": "three"};
+      let keyArr = ["test", "test_2", "test_3"];
+      assert.isTrue(
+        nullOrEmptyStringFields(obj, keyArr),
+        "it should be true"
+      );
+    });
+    it("should return true if any obj values are empty", () => {
+      let obj = {"test": "one","test_2": "","test_3": "three"};
+      let keyArr = ["test", "test_2", "test_3"];
+      assert.isTrue(
+        nullOrEmptyStringFields(obj, keyArr),
+        "it should be true"
+      );
+    });
+    it("should return false if no obj values are null or empty", () => {
+      let obj = {"test": "one","test_2": "two","test_3": "three"};
+      let keyArr = ["test", "test_2", "test_3"];
+      assert.isFalse(
+        nullOrEmptyStringFields(obj, keyArr),
+        "it should be false"
+      );
+    });
+  });
   });
 });

@@ -79,6 +79,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
    - [splatContains](#splatContains)
    - [spreadKeyValues](#spreadKeyValues)
    - [transpose](#transpose)
+   - [nullOrEmptyStringFields](#nullOrEmptyStringFields)
 8. [Encoding Methods](#encoding-methods)
    - [hclEncode](#hclEncode)
 9. [CLI Utility Methods](#cli-utility-methods)
@@ -1445,6 +1446,21 @@ transpose(source, destination);
   two: 2
 }
 
+```
+
+### nullOrEmptyStringFields
+
+Check to see if any key values of an object are null or empty
+
+```js
+const { nullOrEmptyStringFields } = require("lazy-z");
+
+let obj1 = {"key1": "one", "key2": null};
+let obj2 = {"key1": "one", "key2": "two"}
+let keyArray = ["key1", "key2"];
+
+nullOrEmptyStringFields(obj1, keyArray); // returns true
+nullOrEmptyStringFields(obj2, keyArray); // returns false
 ```
 
 ---
