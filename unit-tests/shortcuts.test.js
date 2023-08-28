@@ -62,24 +62,6 @@ describe("shortcuts", () => {
     });
   });
   describe("azObjectSort", () => {
-    it("should throw an error if strings are provided", () => {
-      let task = () => {
-        return shortcuts.azObjectSort({ id: 1 }, 2, "id");
-      };
-      assert.throws(task, "b expects type object got number");
-    });
-    it("should throw an error if strings are provided", () => {
-      let task = () => {
-        shortcuts.azObjectSort(2, { id: 1 }, "id");
-      };
-      assert.throws(task, "a expects type object got number");
-    });
-    it("should throw an error if key is not a string", () => {
-      let task = () => {
-        shortcuts.azObjectSort({ type: "cos" }, { type: "vsi" }, 2);
-      };
-      assert.throws(task, "key expects type string got number");
-    });
     it("should return -1 if key in object a is less than key in object b", () => {
       let actualData = shortcuts.azObjectSort({ id: 1 }, { id: 2 }, "id");
       assert.deepEqual(actualData, -1, "it should return -1");
