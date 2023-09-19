@@ -92,6 +92,7 @@ lazy-z is a light-weight NodeJS library for assorted shortcuts and utilities
     - [nestedSplat](#nestedSplat)
     - [deleteUnfoundArrayItems](#deleteUnfoundArrayItems)
     - [anyAreEmpty](#anyAreEmpty)
+    - [deepCopyArrayOfObjects](#deepCopyArrayOfObjects)
 11. [lazyZstate](#lazyZstate)
 12. [axios mocks](#axios-mocks)
 13. [Networking Utilities](#networking-utilities)
@@ -1873,6 +1874,23 @@ anyAreEmpty(
 true
 ```
 
+### deepCopyArrayOfObjects
+
+Create a deep copy of an array of objects
+
+```js
+const { deepCopyArrayOfObjecs } = require("lazy-z");
+
+deepCopyArrayOfObjects(
+  [
+    { name: "foo" },
+    { name: "bar" }
+  ]
+)
+
+// returns
+[ { name: "foo" }, { name: "bar" }] // deep copy of array
+```
 ---
 
 ## lazyZstate
