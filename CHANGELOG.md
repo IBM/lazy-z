@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.10.8
+- Added Method
+  - `deepCopyArrayOfObjects`
+
 ## 1.10.7
 - Added Method
   - `nullOrEmptyStringFields`
