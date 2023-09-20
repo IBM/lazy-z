@@ -119,7 +119,7 @@ describe("arrays", () => {
       let actualData = deepCopyArrayOfObjects(testData);
       assert.notEqual(testData, actualData);
       assert.deepEqual(testData, actualData);
-    })
+    });
     it("should not change original when new array is changed", () => {
       let testData = [
         {
@@ -134,7 +134,7 @@ describe("arrays", () => {
       let actualData = deepCopyArrayOfObjects(testData);
       actualData.push({ name: "new", data: "ex3" });
       assert.notDeepEqual(testData, actualData);
-    })
+    });
     it("should not change new array when original is changed", () => {
       let testData = [
         {
@@ -149,6 +149,13 @@ describe("arrays", () => {
       let actualData = deepCopyArrayOfObjects(testData);
       testData[0] = { name: "new", data: "ex3" };
       assert.notDeepEqual(testData, actualData);
-    })
-  })
+    });
+    it("should fail when not array of objects is passed in", () => {
+      let task = () => deepCopyArrayOfObjects(["foo", "bar"]);
+      assert.throws(
+        task,
+        `deepCopyArrayOfObjects expects parentArray to be array of type object got ["string","string"]`
+      );
+    });
+  });
 });
