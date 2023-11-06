@@ -9,7 +9,7 @@ describe("store", () => {
       let task = () => createStore({ frog: true });
       assert.throws(
         task,
-        `createStore expects defaults to only have keys _defaults and _no_default, got ["frog"]`
+        `createStore expects defaults to only have keys _defaults and _no_default, got ["frog"]`,
       );
     });
     it("if no store is passed, it should create a store with only default values", () => {
@@ -48,7 +48,7 @@ describe("store", () => {
         {
           frog: "yes",
           hi: "mom",
-        }
+        },
       );
       let expectedData = {
         frog: "yes",
@@ -67,7 +67,7 @@ describe("store", () => {
       let task = () => storeTemplate({}, "hi", {});
       assert.throws(
         task,
-        "lazyZstate store template expects top level components to have init function, got undefined."
+        "lazyZstate store template expects top level components to have init function, got undefined.",
       );
     });
     it("should initialize an empty object when init is passed and object not found in store", () => {
@@ -112,7 +112,7 @@ describe("store", () => {
       assert.deepEqual(
         actualData.updateFunctions.length,
         1,
-        "it should set after init"
+        "it should set after init",
       );
       assert.isTrue(test, "it should be true after update");
     });
@@ -134,7 +134,7 @@ describe("store", () => {
       actualData.frog.create();
       assert.isTrue(
         isFunction(actualData.frog.create) && test,
-        "it should be a function and should update test"
+        "it should be a function and should update test",
       );
     });
     it("should initialize create when passed as a subComponent function", () => {
@@ -159,7 +159,7 @@ describe("store", () => {
       actualData.frog.egg.create();
       assert.isTrue(
         isFunction(actualData.frog.egg.create) && test,
-        "it should be a function and should update test"
+        "it should be a function and should update test",
       );
     });
   });
@@ -181,7 +181,7 @@ describe("store", () => {
         assert.deepEqual(
           slz.updateCallback.toString(),
           callback.toString(),
-          "it should be same function"
+          "it should be same function",
         );
       });
     });
@@ -190,7 +190,7 @@ describe("store", () => {
         let task = () => new lazyZstate().updateCallback();
         assert.throws(
           task,
-          `state.updateCallback expects a callback to be set using state.setUpdateCallback. No callback has been added.`
+          `state.updateCallback expects a callback to be set using state.setUpdateCallback. No callback has been added.`,
         );
       });
     });
@@ -268,7 +268,7 @@ describe("store", () => {
               list: ["item"],
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should push to a child array in store when fields is string", () => {
@@ -284,7 +284,7 @@ describe("store", () => {
           {
             list: ["item"],
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should throw an error if field is not string or array", () => {
@@ -299,7 +299,7 @@ describe("store", () => {
         let task = () => slz.push(2, "item");
         assert.throws(
           task,
-          "lazyZstore.push expects fields to be either string or array of strings, got number"
+          "lazyZstore.push expects fields to be either string or array of strings, got number",
         );
       });
     });
@@ -333,7 +333,7 @@ describe("store", () => {
               ],
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should update a child object of array in store when fields array and looking up field other than name", () => {
@@ -356,7 +356,7 @@ describe("store", () => {
           {
             foo: "baz",
           },
-          "id"
+          "id",
         );
         assert.deepEqual(
           slz.store,
@@ -370,7 +370,7 @@ describe("store", () => {
               ],
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should update a child object of array in store when fields is deep array", () => {
@@ -406,7 +406,7 @@ describe("store", () => {
               },
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should update a child object of array in store when fields is string", () => {
@@ -434,7 +434,7 @@ describe("store", () => {
               },
             ],
           },
-          "it should update store"
+          "it should update store",
         );
       });
       it("should update a child object of array in store when fields is string and looking up field other than name", () => {
@@ -455,7 +455,7 @@ describe("store", () => {
           {
             foo: "baz",
           },
-          "id"
+          "id",
         );
         assert.deepEqual(
           slz.store,
@@ -467,7 +467,7 @@ describe("store", () => {
               },
             ],
           },
-          "it should update store"
+          "it should update store",
         );
       });
       it("should update a child object of array in store when fields is array of one string", () => {
@@ -495,7 +495,7 @@ describe("store", () => {
               },
             ],
           },
-          "it should update store"
+          "it should update store",
         );
       });
       it("should update a child object of array in store when fields is string and looking up field other than name", () => {
@@ -516,7 +516,7 @@ describe("store", () => {
           {
             foo: "baz",
           },
-          "id"
+          "id",
         );
         assert.deepEqual(
           slz.store,
@@ -528,7 +528,7 @@ describe("store", () => {
               },
             ],
           },
-          "it should update store"
+          "it should update store",
         );
       });
       it("should throw an error if field is not string or array", () => {
@@ -543,7 +543,7 @@ describe("store", () => {
         let task = () => slz.updateChild(2, "item");
         assert.throws(
           task,
-          "lazyZstore.updateChild expects fields to be either string or array of strings, got number"
+          "lazyZstore.updateChild expects fields to be either string or array of strings, got number",
         );
       });
     });
@@ -570,7 +570,7 @@ describe("store", () => {
               list: [],
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should remove a child object of array in store when fields array when index is not name", () => {
@@ -595,7 +595,7 @@ describe("store", () => {
               list: [],
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should remove a child object of array in store when fields deep array", () => {
@@ -624,7 +624,7 @@ describe("store", () => {
               },
             },
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should remove a child object of array in store when fields string", () => {
@@ -645,7 +645,7 @@ describe("store", () => {
           {
             list: [],
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should remove a child object of array in store when fields string and index is not name", () => {
@@ -666,7 +666,7 @@ describe("store", () => {
           {
             list: [],
           },
-          "it should push to store"
+          "it should push to store",
         );
       });
       it("should throw an error if field is not string or array", () => {
@@ -681,7 +681,7 @@ describe("store", () => {
         let task = () => slz.carve(2, "item");
         assert.throws(
           task,
-          "lazyZstore.carve expects fields to be either string or array of strings, got number"
+          "lazyZstore.carve expects fields to be either string or array of strings, got number",
         );
       });
     });
@@ -699,7 +699,7 @@ describe("store", () => {
         let task = () => slz.setUnfound("test", {}, "dev");
         assert.throws(
           task,
-          'lazyZstore expects store["test"] to be array of type string got ["Array"]'
+          'lazyZstore expects store["test"] to be array of type string got ["Array"]',
         );
       });
       it("should set value on object to null if not found", () => {
@@ -736,6 +736,145 @@ describe("store", () => {
         slz.newField("frog", { init: initSpy });
         assert.isTrue(initSpy.calledOnce, "it should be called");
         assert.isTrue(slz.frog !== null, "it should not be null");
+      });
+    });
+  });
+  describe("new state store functions - 1.11.0", () => {
+    describe("store.schema", () => {
+      it("should set invalid and invalidText when schema is added to new field", () => {
+        let slz = new lazyZstate();
+        let invalidSpy = new sinon.spy();
+        let invalidTextSpy = new sinon.spy();
+        slz.newField("frog", {
+          init: () => {},
+          schema: {
+            test: {
+              default: "frog",
+              invalid: invalidSpy,
+              invalidText: invalidTextSpy,
+            },
+          },
+        });
+        slz.frog.test.invalid();
+        slz.frog.test.invalidText();
+        assert.isTrue(
+          invalidSpy.calledOnce,
+          "it should set field and call spy",
+        );
+        assert.isTrue(
+          invalidTextSpy.calledOnce,
+          "it should set field and call spy",
+        );
+      });
+      it("should set default functions for invalid, invalidText, disabled, and disabledText and set default value to null", () => {
+        let slz = new lazyZstate();
+        slz.newField("frog", {
+          init: () => {},
+          schema: {
+            test: {},
+          },
+          subComponents: {
+            test2: {},
+          },
+        });
+        assert.isFalse(slz.frog.test.invalid(), "it should return false");
+        assert.isFalse(slz.frog.test.disabled(), "it should return false");
+        assert.deepEqual(
+          slz.frog.test.invalidText(),
+          "Invalid test value",
+          "it should return InvalidText",
+        );
+        assert.deepEqual(
+          slz.frog.test.disabledText(),
+          "test disabled",
+          "it should return InvalidText",
+        );
+        assert.isNull(slz.frog.test.default, "it should be null");
+      });
+      it("should throw an error when trying to create a schema object with reserved names", () => {
+        let slz = new lazyZstate();
+        let invalidSpy = new sinon.spy();
+        let invalidTextSpy = new sinon.spy();
+        let task = () => {
+          slz.newField("frog", {
+            init: () => {},
+            schema: {
+              create: {
+                default: "frog",
+                invalid: invalidSpy,
+                invalidText: invalidTextSpy,
+              },
+            },
+          });
+        };
+        assert.throws(task, 'Invalid reserved key name in schema: ["create"]');
+      });
+      it("should throw an error when trying to create a schema object with the same name as a subComponent", () => {
+        let slz = new lazyZstate();
+        let invalidSpy = new sinon.spy();
+        let invalidTextSpy = new sinon.spy();
+        let task = () => {
+          slz.newField("frog", {
+            init: () => {},
+            schema: {
+              test: {
+                default: "frog",
+                invalid: invalidSpy,
+                invalidText: invalidTextSpy,
+              },
+            },
+            subComponents: {
+              test: {},
+              toad: {},
+            },
+          });
+        };
+        assert.throws(
+          task,
+          'Cannot create schema fields with the same name as subComponents: ["test"]',
+        );
+      });
+      it("should set default functions for invalid, invalidText, disabled, and disabledText and set default value to null for subcomponents", () => {
+        let slz = new lazyZstate();
+        slz.newField("frog", {
+          init: () => {},
+          schema: {
+            test: {},
+          },
+          subComponents: {
+            sons: {
+              schema: {
+                test: {},
+              },
+            },
+          },
+        });
+        assert.isFalse(slz.frog.test.invalid(), "it should return false");
+        assert.isFalse(slz.frog.test.disabled(), "it should return false");
+        assert.deepEqual(
+          slz.frog.test.invalidText(),
+          "Invalid test value",
+          "it should return InvalidText",
+        );
+        assert.deepEqual(
+          slz.frog.test.disabledText(),
+          "test disabled",
+          "it should return InvalidText",
+        );
+        assert.isNull(slz.frog.sons.test.default, "it should be null");
+        assert.isFalse(slz.frog.sons.test.invalid(), "it should return false");
+        assert.isFalse(slz.frog.sons.test.disabled(), "it should return false");
+        assert.deepEqual(
+          slz.frog.sons.test.invalidText(),
+          "Invalid test value",
+          "it should return InvalidText",
+        );
+        assert.deepEqual(
+          slz.frog.sons.test.disabledText(),
+          "test disabled",
+          "it should return InvalidText",
+        );
+        assert.isNull(slz.frog.sons.test.default, "it should be null");
       });
     });
   });

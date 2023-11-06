@@ -13,7 +13,7 @@ describe("networking", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should create correct cidr block"
+        "it should create correct cidr block",
       );
     });
     it("should format the CIDR block for vpc", () => {
@@ -22,7 +22,7 @@ describe("networking", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should create correct cidr block"
+        "it should create correct cidr block",
       );
     });
   });
@@ -59,12 +59,12 @@ describe("networking", () => {
           source: "161.26.0.0/16",
           destination: "10.0.0.0/8",
         },
-        true
+        true,
       );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with no protocol for acl outbound/deny", () => {
@@ -99,12 +99,12 @@ describe("networking", () => {
           source: "161.26.0.0/16",
           destination: "10.0.0.0/8",
         },
-        true
+        true,
       );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with icmp protocol for acl", () => {
@@ -144,12 +144,12 @@ describe("networking", () => {
             type: 1,
           },
         },
-        true
+        true,
       );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with icmp protocol for acl with only code", () => {
@@ -188,12 +188,12 @@ describe("networking", () => {
             code: 2,
           },
         },
-        true
+        true,
       );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with icmp protocol for acl with only type", () => {
@@ -220,21 +220,24 @@ describe("networking", () => {
           source_port_max: null,
         },
       };
-      let actualData = buildNetworkingRule({
-        name: "allow-ibm-inbound",
-        allow: true,
-        inbound: true,
-        source: "161.26.0.0/16",
-        destination: "10.0.0.0/8",
-        ruleProtocol: "icmp",
-        rule: {
-          type: 2,
+      let actualData = buildNetworkingRule(
+        {
+          name: "allow-ibm-inbound",
+          allow: true,
+          inbound: true,
+          source: "161.26.0.0/16",
+          destination: "10.0.0.0/8",
+          ruleProtocol: "icmp",
+          rule: {
+            type: 2,
+          },
         },
-      }, true);
+        true,
+      );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with tcp protocol for acl", () => {
@@ -261,24 +264,27 @@ describe("networking", () => {
           source_port_max: null,
         },
       };
-      let actualData = buildNetworkingRule({
-        name: "allow-ibm-inbound",
-        allow: true,
-        inbound: true,
-        source: "161.26.0.0/16",
-        destination: "10.0.0.0/8",
-        ruleProtocol: "tcp",
-        rule: {
-          port_min: 8080,
-          port_max: 8080,
-          source_port_min: 443,
-          source_port_max: 443,
+      let actualData = buildNetworkingRule(
+        {
+          name: "allow-ibm-inbound",
+          allow: true,
+          inbound: true,
+          source: "161.26.0.0/16",
+          destination: "10.0.0.0/8",
+          ruleProtocol: "tcp",
+          rule: {
+            port_min: 8080,
+            port_max: 8080,
+            source_port_min: 443,
+            source_port_max: 443,
+          },
         },
-      }, true);
+        true,
+      );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with tcp protocol for acl with only port min", () => {
@@ -305,21 +311,24 @@ describe("networking", () => {
           source_port_max: null,
         },
       };
-      let actualData = buildNetworkingRule({
-        name: "allow-ibm-inbound",
-        allow: true,
-        inbound: true,
-        source: "161.26.0.0/16",
-        destination: "10.0.0.0/8",
-        ruleProtocol: "tcp",
-        rule: {
-          port_min: 8080,
+      let actualData = buildNetworkingRule(
+        {
+          name: "allow-ibm-inbound",
+          allow: true,
+          inbound: true,
+          source: "161.26.0.0/16",
+          destination: "10.0.0.0/8",
+          ruleProtocol: "tcp",
+          rule: {
+            port_min: 8080,
+          },
         },
-      }, true);
+        true,
+      );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with tcp protocol for acl with only port max", () => {
@@ -346,21 +355,24 @@ describe("networking", () => {
           source_port_max: null,
         },
       };
-      let actualData = buildNetworkingRule({
-        name: "allow-ibm-inbound",
-        allow: true,
-        inbound: true,
-        source: "161.26.0.0/16",
-        destination: "10.0.0.0/8",
-        ruleProtocol: "tcp",
-        rule: {
-          port_max: 8080,
+      let actualData = buildNetworkingRule(
+        {
+          name: "allow-ibm-inbound",
+          allow: true,
+          inbound: true,
+          source: "161.26.0.0/16",
+          destination: "10.0.0.0/8",
+          ruleProtocol: "tcp",
+          rule: {
+            port_max: 8080,
+          },
         },
-      }, true);
+        true,
+      );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with no protocol for security group", () => {
@@ -391,7 +403,7 @@ describe("networking", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
     it("should build the correct rule with tcp protocol for security group", () => {
@@ -427,7 +439,7 @@ describe("networking", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return networking rule"
+        "it should return networking rule",
       );
     });
   });

@@ -46,12 +46,12 @@ describe("objects", () => {
             name: "frog",
           },
         ],
-        "name"
+        "name",
       );
       assert.deepEqual(
         actualData,
         ["todd", "egg", "frog"],
-        "should return array"
+        "should return array",
       );
     });
   });
@@ -70,7 +70,7 @@ describe("objects", () => {
           },
         ],
         "name",
-        "egg"
+        "egg",
       );
       assert.deepEqual(actualData, true, "should contain egg");
     });
@@ -129,7 +129,7 @@ describe("objects", () => {
       };
       assert.throws(
         task,
-        "test expected no duplicate keys for name. Duplicate value: todd"
+        "test expected no duplicate keys for name. Duplicate value: todd",
       );
     });
   });
@@ -149,7 +149,7 @@ describe("objects", () => {
       assert.deepEqual(
         arraySplatIndex(arr, "name", "todd"),
         0,
-        "it should return index"
+        "it should return index",
       );
     });
   });
@@ -171,7 +171,7 @@ describe("objects", () => {
         {
           name: "todd",
         },
-        "it should return index"
+        "it should return index",
       );
     });
   });
@@ -192,7 +192,7 @@ describe("objects", () => {
       assert.deepEqual(
         returnedValue,
         [{ name: "todd" }],
-        "it should carve out value"
+        "it should carve out value",
       );
       assert.deepEqual(
         arr,
@@ -204,7 +204,7 @@ describe("objects", () => {
             name: "frog",
           },
         ],
-        "it should change array in place"
+        "it should change array in place",
       );
     });
     it("should throw an error if trying to carve unfound object", () => {
@@ -224,7 +224,7 @@ describe("objects", () => {
       };
       assert.throws(
         task,
-        "carve expected object with name value ronald. Found no matching entries."
+        "carve expected object with name value ronald. Found no matching entries.",
       );
     });
   });
@@ -235,34 +235,34 @@ describe("objects", () => {
     it("should return false if all fields not null", () => {
       assert.isFalse(
         allFieldsNull({ one: null, two: 2 }),
-        "it should be false"
+        "it should be false",
       );
     });
-  describe("nullorEmptyStringFields", () => {
-    it("should return true if any obj values are null", () => {
-      let obj = {"test": "one","test_2": null,"test_3": "three"};
-      let keyArr = ["test", "test_2", "test_3"];
-      assert.isTrue(
-        nullOrEmptyStringFields(obj, keyArr),
-        "it should be true"
-      );
+    describe("nullorEmptyStringFields", () => {
+      it("should return true if any obj values are null", () => {
+        let obj = { test: "one", test_2: null, test_3: "three" };
+        let keyArr = ["test", "test_2", "test_3"];
+        assert.isTrue(
+          nullOrEmptyStringFields(obj, keyArr),
+          "it should be true",
+        );
+      });
+      it("should return true if any obj values are empty", () => {
+        let obj = { test: "one", test_2: "", test_3: "three" };
+        let keyArr = ["test", "test_2", "test_3"];
+        assert.isTrue(
+          nullOrEmptyStringFields(obj, keyArr),
+          "it should be true",
+        );
+      });
+      it("should return false if no obj values are null or empty", () => {
+        let obj = { test: "one", test_2: "two", test_3: "three" };
+        let keyArr = ["test", "test_2", "test_3"];
+        assert.isFalse(
+          nullOrEmptyStringFields(obj, keyArr),
+          "it should be false",
+        );
+      });
     });
-    it("should return true if any obj values are empty", () => {
-      let obj = {"test": "one","test_2": "","test_3": "three"};
-      let keyArr = ["test", "test_2", "test_3"];
-      assert.isTrue(
-        nullOrEmptyStringFields(obj, keyArr),
-        "it should be true"
-      );
-    });
-    it("should return false if no obj values are null or empty", () => {
-      let obj = {"test": "one","test_2": "two","test_3": "three"};
-      let keyArr = ["test", "test_2", "test_3"];
-      assert.isFalse(
-        nullOrEmptyStringFields(obj, keyArr),
-        "it should be false"
-      );
-    });
-  });
   });
 });

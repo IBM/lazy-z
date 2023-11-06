@@ -20,7 +20,7 @@ describe("number methods", () => {
       let task = () => isInRange(1, 5, 1);
       assert.throws(
         task,
-        "isInRange expects min(5) to be less than or equal to max(1)."
+        "isInRange expects min(5) to be less than or equal to max(1).",
       );
     });
   });
@@ -29,14 +29,14 @@ describe("number methods", () => {
       let task = () => validPortRange("frog");
       assert.throws(
         task,
-        `Name must be one of the following: ["type","code","port_min","port_max","source_port_min","source_port_max"] got frog`
+        `Name must be one of the following: ["type","code","port_min","port_max","source_port_min","source_port_max"] got frog`,
       );
     });
     it("should throw an error when value is not an integer", () => {
       let task = () => validPortRange("type", "string");
       assert.throws(
         task,
-        "validPortRange expects an integer to be parsed from value. Got type of string for value string."
+        "validPortRange expects an integer to be parsed from value. Got type of string for value string.",
       );
     });
     it("should return true if the port range is not icmp and is valid", () => {
@@ -54,7 +54,7 @@ describe("number methods", () => {
     it("should return false if the port range is not icmp and is not valid", () => {
       assert.isFalse(
         validPortRange("source_port_min", 0),
-        "it should be false"
+        "it should be false",
       );
     });
   });
@@ -67,48 +67,33 @@ describe("number methods", () => {
     it("should return true if any range invalid", () => {
       assert.isFalse(
         haveValidRanges([1, 0, 2], [3, 1, 2]),
-        "it should return false"
+        "it should return false",
       );
     });
   });
   describe("portRangeInvalid", () => {
     it("should return true if port value is not a whole number ", () => {
-      assert.isTrue(
-        portRangeInvalid("code", 8080.1),
-        "it should return true"
-      );
+      assert.isTrue(portRangeInvalid("code", 8080.1), "it should return true");
     });
     it("should return true if port value is empty", () => {
-      assert.isTrue(
-        portRangeInvalid("port_max", ""),
-        "it should return true"
-      );
+      assert.isTrue(portRangeInvalid("port_max", ""), "it should return true");
     });
     it("should return false if port range is valid", () => {
       assert.isFalse(
         portRangeInvalid("port_min", 3000),
-        "it should return false"
+        "it should return false",
       );
     });
   });
   describe("rangeInvalid", () => {
     it("should return true if value is not a whole number ", () => {
-      assert.isTrue(
-        rangeInvalid(0.1, 0, 5),
-        "it should return true"
-      );
+      assert.isTrue(rangeInvalid(0.1, 0, 5), "it should return true");
     });
     it("should return true if value is empty", () => {
-      assert.isTrue(
-        rangeInvalid("", 0, 5),
-        "it should return true"
-      );
+      assert.isTrue(rangeInvalid("", 0, 5), "it should return true");
     });
     it("should return false if value is within the range", () => {
-      assert.isFalse(
-        rangeInvalid(100, 100, 101),
-        "it should return false"
-      );
+      assert.isFalse(rangeInvalid(100, 100, 101), "it should return false");
     });
   });
 });

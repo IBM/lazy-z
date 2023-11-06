@@ -8,7 +8,7 @@ describe("shortcuts", () => {
       assert.deepEqual(
         keys({ test: true }),
         ["test"],
-        "should return correct keys"
+        "should return correct keys",
       );
     });
   });
@@ -106,7 +106,7 @@ describe("shortcuts", () => {
             one: "one",
           },
         },
-        "sub_obj"
+        "sub_obj",
       );
       assert.deepEqual(actualData, "object", "it should return object");
     });
@@ -156,7 +156,7 @@ describe("shortcuts", () => {
     it("should return true if null", () => {
       assert.isTrue(
         shortcuts.isNullOrEmptyString(null),
-        "it should return true"
+        "it should return true",
       );
     });
     it("should return true if empty string", () => {
@@ -171,7 +171,7 @@ describe("shortcuts", () => {
       };
       assert.throws(
         task,
-        "test expected valid ipv4 address or CIDR block, got honk"
+        "test expected valid ipv4 address or CIDR block, got honk",
       );
     });
     it("should not throw an error if address is vaid", () => {
@@ -185,7 +185,7 @@ describe("shortcuts", () => {
     it("should return true if a function", () => {
       assert.isTrue(
         shortcuts.isFunction(() => {}),
-        "it should be"
+        "it should be",
       );
     });
   });
@@ -214,13 +214,13 @@ describe("shortcuts", () => {
     it("should return false if the values of two arrays with only strings, numbers, and booleans are not equal", () => {
       assert.isFalse(
         deepEqual(["g", 1, false, "d"], ["g", 2, false, "d"]),
-        "it should return false"
+        "it should return false",
       );
     });
     it("should return true if the values of two arrays with only strings, numbers, and booleans are equal", () => {
       assert.isTrue(
         deepEqual(["g", 1, false, "d"], ["g", 1, false, "d"]),
-        "it should return false"
+        "it should return false",
       );
     });
     it("should return false if two objects have keys that are different lengths", () => {
@@ -237,7 +237,7 @@ describe("shortcuts", () => {
     it("should return false if two objects have unmatched key values", () => {
       assert.isFalse(
         deepEqual({ foo: "bar" }, { foo: "baz" }),
-        "it should be false"
+        "it should be false",
       );
     });
     it("should return false if a big nested object does not equal", () => {
@@ -381,7 +381,7 @@ describe("shortcuts", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct zones"
+        "it should return correct zones",
       );
     });
   });
@@ -393,7 +393,7 @@ describe("shortcuts", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct zones"
+        "it should return correct zones",
       );
     });
     it("should run the callback for each zone", () => {
@@ -409,7 +409,7 @@ describe("shortcuts", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct zone number"
+        "it should return correct zone number",
       );
     });
   });
@@ -418,14 +418,14 @@ describe("shortcuts", () => {
       assert.deepEqual(
         shortcuts.buildNumberDropdownList(2),
         ["0", "1"],
-        "it should return list"
+        "it should return list",
       );
     });
     it("should return list with add", () => {
       assert.deepEqual(
         shortcuts.buildNumberDropdownList(2, 1),
         ["1", "2"],
-        "it should return list"
+        "it should return list",
       );
     });
   });

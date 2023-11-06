@@ -10,5 +10,5 @@ module.exports = {
   ...require("./lib/numbers"),
   ...require("./lib/store").lazyZstate,
   ...require("./lib/axios-mocks"),
-  ...require("./lib/networking")
+  ...require("./lib/networking"),
 };

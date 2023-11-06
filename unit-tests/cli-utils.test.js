@@ -13,7 +13,7 @@ describe("cli utils", () => {
             "--help": "-h",
           },
           "-h",
-          "-h"
+          "-h",
         );
       };
       assert.throws(task, "Invalid duplicate flag -h");
@@ -27,7 +27,7 @@ describe("cli utils", () => {
             "--help": "-h",
           },
           "-h",
-          "--help"
+          "--help",
         );
       };
       assert.throws(task, "Invalid duplicate flag --help.");
@@ -41,7 +41,7 @@ describe("cli utils", () => {
             "--help": "-h",
           },
           "-h",
-          "-f"
+          "-f",
         );
       };
       assert.throws(task, "Invalid flag -f");
@@ -55,7 +55,7 @@ describe("cli utils", () => {
             "-i": "--in",
           },
           "--in",
-          "filePath"
+          "filePath",
         );
       };
       assert.doesNotThrow(task);
@@ -66,7 +66,7 @@ describe("cli utils", () => {
           "help",
           { "--in": "-i", "-i": "--in", "-o": "--out", "--out": "-o" },
           "--in",
-          "./filePath"
+          "./filePath",
         );
       };
       assert.throws(task, "Missing flags from command 'help': --in --out");
@@ -91,7 +91,7 @@ describe("cli utils", () => {
               out: ["-o", "--out"],
               type: ["-t", "--type"],
               tfvar: ["-v", "--tf-var"],
-            }
+            },
           ),
           "-i",
           "./in-file-path/",
@@ -102,7 +102,7 @@ describe("cli utils", () => {
           "-v",
           "testVar1=true",
           "-v",
-          'testVar2="true"'
+          'testVar2="true"',
         );
         assert.doesNotThrow(task);
       };
@@ -207,7 +207,7 @@ describe("cli utils", () => {
       let actualData = utils.replaceOptionalFlags(
         { requiredFlags: ["one"] },
         {},
-        "hi"
+        "hi",
       );
       assert.deepEqual(actualData, ["hi"], "it should return commands");
     });
@@ -224,13 +224,13 @@ describe("cli utils", () => {
           optional: ["-o", "--ooo"],
         },
         "-o",
-        "frog"
+        "frog",
       );
       let expectedData = ["?-o", "frog"];
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct data"
+        "it should return correct data",
       );
     });
   });
@@ -263,7 +263,7 @@ describe("cli utils", () => {
         "-v",
         "testVar1=true",
         "-v",
-        'testVar2="true"'
+        'testVar2="true"',
       );
       let expectedData = {
         in: "./in-file-path/",
@@ -314,7 +314,7 @@ describe("cli utils", () => {
         "-v",
         "testVar1=true",
         "-v",
-        'testVar2="true"'
+        'testVar2="true"',
       );
       assert.deepEqual(actualData, expectedData, "should return correct data");
     });
@@ -330,18 +330,23 @@ describe("cli utils", () => {
         optionalFlags: [
           {
             name: "time",
-            noMatchingValue: false
+            noMatchingValue: false,
           },
         ],
       };
-      let actualData = utils.flagValues("breakglass", action, tags, ...[
-        `-t`,
-        `8`,
-        `-a`,
-        `API_KEY`,
-        `-j`,
-        "justification value trails at the end of the line still subject to 30 character minimum",
-      ]);
+      let actualData = utils.flagValues(
+        "breakglass",
+        action,
+        tags,
+        ...[
+          `-t`,
+          `8`,
+          `-a`,
+          `API_KEY`,
+          `-j`,
+          "justification value trails at the end of the line still subject to 30 character minimum",
+        ],
+      );
       assert.deepEqual(
         actualData,
         {
@@ -350,7 +355,7 @@ describe("cli utils", () => {
           justification:
             "justification value trails at the end of the line still subject to 30 character minimum",
         },
-        "it should"
+        "it should",
       );
     });
     it("should run correctly with the icse cli checkglass data", () => {
@@ -365,18 +370,23 @@ describe("cli utils", () => {
         optionalFlags: [
           {
             name: "time",
-            noMatchingValue: false
+            noMatchingValue: false,
           },
         ],
       };
-      let actualData = utils.flagValues("breakglass", action, tags, ...[
-        `-t`,
-        `8`,
-        `-a`,
-        `API_KEY`,
-        `-j`,
-        "justification value trails at the end of the line still subject to 30 character minimum",
-      ]);
+      let actualData = utils.flagValues(
+        "breakglass",
+        action,
+        tags,
+        ...[
+          `-t`,
+          `8`,
+          `-a`,
+          `API_KEY`,
+          `-j`,
+          "justification value trails at the end of the line still subject to 30 character minimum",
+        ],
+      );
       assert.deepEqual(
         actualData,
         {
@@ -385,7 +395,7 @@ describe("cli utils", () => {
           justification:
             "justification value trails at the end of the line still subject to 30 character minimum",
         },
-        "it should"
+        "it should",
       );
     });
   });

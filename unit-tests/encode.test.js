@@ -16,7 +16,7 @@ describe("encode", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct data"
+        "it should return the correct data",
       );
     });
     it("should take a json object with only string, bool, and number variables and convert to hcl object", () => {
@@ -30,7 +30,7 @@ describe("encode", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct data"
+        "it should return the correct data",
       );
     });
     it("should take a json object with only string, bool, number, and array variables and convert to hcl", () => {
@@ -45,7 +45,7 @@ describe("encode", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct data"
+        "it should return the correct data",
       );
     });
     it("should take a json object with only string, bool, number, array, and object variables and convert to hcl", () => {
@@ -73,19 +73,19 @@ array   = [1,true,"three",4]`;
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct data"
+        "it should return the correct data",
       );
     });
     it("should work with a very big nested json object", () => {
       let actualData = hclEncode(overrideJson);
       let expectedData = fs.readFileSync(
         "./unit-tests/data-files/override.tfvars",
-        "utf-8"
+        "utf-8",
       );
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct data"
+        "it should return the correct data",
       );
     });
   });

@@ -10,7 +10,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return the correct string"
+        "it should return the correct string",
       );
     });
   });
@@ -21,7 +21,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "should return correct string"
+        "should return correct string",
       );
     });
     it("should return string if object", () => {
@@ -30,7 +30,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "should return correct string"
+        "should return correct string",
       );
     });
     it("should return string if array", () => {
@@ -39,7 +39,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "should return correct string"
+        "should return correct string",
       );
     });
     it("should return string if bool or number", () => {
@@ -48,7 +48,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "should return correct string"
+        "should return correct string",
       );
     });
   });
@@ -59,7 +59,7 @@ describe("string functions", () => {
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should capitalize the word"
+        "it should capitalize the word",
       );
     });
   });
@@ -69,24 +69,24 @@ describe("string functions", () => {
       assert.deepEqual(
         utils.kebabCase(`All Caps With Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.kebabCase(`All_Caps with-Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.kebabCase(`all_caps_with_spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
     });
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.kebabCase(false),
         "",
-        "it should return empty string"
+        "it should return empty string",
       );
     });
   });
@@ -96,24 +96,24 @@ describe("string functions", () => {
       assert.deepEqual(
         utils.snakeCase(`All Caps With Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.snakeCase(`All_Caps with-Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.snakeCase(`all-caps-with-spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
     });
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.snakeCase(false),
         "",
-        "it should return empty string"
+        "it should return empty string",
       );
     });
   });
@@ -123,29 +123,29 @@ describe("string functions", () => {
       assert.deepEqual(
         utils.camelCase(`All Caps With Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.camelCase(`All_Caps with-Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.camelCase(`all-caps-with-spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.camelCase(`caps`),
         "caps",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
     });
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.camelCase(false),
         "",
-        "it should return empty string"
+        "it should return empty string",
       );
     });
   });
@@ -155,71 +155,71 @@ describe("string functions", () => {
       assert.deepEqual(
         utils.titleCase(`allCapsWithSpaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`All_Caps with-Spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`all-caps-with-spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`all_caps_with_spaces`),
         expectedData,
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`caps`),
         "Caps",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`caps 1234`),
         "Caps 1234",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`VPC Name`),
         "VPC Name",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`VPC 1234`),
         "VPC 1234",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`1234 VPC 1234`),
         "1234 VPC 1234",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`Transit Gateway Transit Gateway`),
         "Transit Gateway Transit Gateway",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
       assert.deepEqual(
         utils.titleCase(`Transit Gateway and Transit Gateway`),
         "Transit Gateway and Transit Gateway",
-        "it should return data in correct case"
+        "it should return data in correct case",
       );
     });
     it("should return string with number", () => {
       assert.deepEqual(
         utils.titleCase(`string-value-1`),
         "String Value 1",
-        "it should return correct case"
-      )
-    })
+        "it should return correct case",
+      );
+    });
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.titleCase(false),
         "",
-        "it should return empty string"
+        "it should return empty string",
       );
     });
   });

@@ -10,7 +10,7 @@ describe("values", () => {
       assert.deepEqual(
         getType(getType),
         "Function",
-        "should return correct value"
+        "should return correct value",
       );
     });
     it("should return typeof if is not function or Array", () => {
@@ -53,7 +53,7 @@ describe("values", () => {
       };
       assert.throws(
         task,
-        "paramTest expected 3 arguments for each variable to be passed as params, got 0"
+        "paramTest expected 3 arguments for each variable to be passed as params, got 0",
       );
     });
     it("should throw the correct error when expecting an array of the same type", () => {
@@ -75,9 +75,9 @@ describe("values", () => {
             bad: "frog",
           },
           ["test"],
-          true
+          true,
         ),
-        "should be false"
+        "should be false",
       );
     });
     it("should return false if strict and missing key", () => {
@@ -87,9 +87,9 @@ describe("values", () => {
             test: true,
             bad: "frog",
           },
-          ["test", "test-2"]
+          ["test", "test-2"],
         ),
-        "should be false"
+        "should be false",
       );
     });
     it("should return true if all match", () => {
@@ -98,9 +98,9 @@ describe("values", () => {
           {
             test: true,
           },
-          ["test"]
+          ["test"],
         ),
-        "should be true"
+        "should be true",
       );
     });
   });

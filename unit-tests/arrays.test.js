@@ -35,14 +35,14 @@ describe("arrays", () => {
       assert.deepEqual(
         numberStringList(3),
         ["0", "1", "2"],
-        "it should return a list"
+        "it should return a list",
       );
     });
     it("should return array when add", () => {
       assert.deepEqual(
         numberStringList(3, 1),
         ["1", "2", "3"],
-        "it should return a list"
+        "it should return a list",
       );
     });
   });
@@ -74,13 +74,13 @@ describe("arrays", () => {
           },
         ],
         "items",
-        "name"
+        "name",
       );
       let expectedData = ["item-1", "item-2", "item-3", "item-4"];
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct array"
+        "it should return correct array",
       );
     });
   });
@@ -88,13 +88,13 @@ describe("arrays", () => {
     it("should remove unfound items", () => {
       let actualData = deleteUnfoundArrayItems(
         ["foo", "bar", "baz"],
-        ["baz", "bork"]
+        ["baz", "bork"],
       );
       let expectedData = ["baz"];
       assert.deepEqual(
         actualData,
         expectedData,
-        "it should return correct array"
+        "it should return correct array",
       );
     });
   });
@@ -114,7 +114,7 @@ describe("arrays", () => {
         {
           name: "bar",
           data: "ex2",
-        }
+        },
       ];
       let actualData = deepCopyArrayOfObjects(testData);
       assert.notEqual(testData, actualData);
@@ -129,7 +129,7 @@ describe("arrays", () => {
         {
           name: "bar",
           data: "ex2",
-        }
+        },
       ];
       let actualData = deepCopyArrayOfObjects(testData);
       actualData.push({ name: "new", data: "ex3" });
@@ -144,7 +144,7 @@ describe("arrays", () => {
         {
           name: "bar",
           data: "ex2",
-        }
+        },
       ];
       let actualData = deepCopyArrayOfObjects(testData);
       testData[0] = { name: "new", data: "ex3" };
@@ -154,7 +154,7 @@ describe("arrays", () => {
       let task = () => deepCopyArrayOfObjects(["foo", "bar"]);
       assert.throws(
         task,
-        `deepCopyArrayOfObjects expects parentArray to be array of type object got ["string","string"]`
+        `deepCopyArrayOfObjects expects parentArray to be array of type object got ["string","string"]`,
       );
     });
   });

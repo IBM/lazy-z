@@ -29,7 +29,7 @@ describe("get object data from chain", () => {
     assert.deepEqual(
       obj,
       { name: "myotherson", value: "also yes" },
-      "it should match"
+      "it should match",
     );
   });
   describe("update", () => {
@@ -52,7 +52,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.sons[1].value,
         "awww yeah",
-        "it should set data in place"
+        "it should set data in place",
       );
     });
   });
@@ -79,7 +79,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.enemies.length === 0,
         true,
-        "it should set data in place"
+        "it should set data in place",
       );
     });
   });
@@ -105,7 +105,7 @@ describe("get object data from chain", () => {
         {
           name: "todd",
         },
-        "todd should be there"
+        "todd should be there",
       );
     });
     it("should push to array with template", () => {
@@ -133,7 +133,7 @@ describe("get object data from chain", () => {
           name: "todd",
           value: null,
         },
-        "todd should be there"
+        "todd should be there",
       );
     });
     it("should push to array with template with defaults", () => {
@@ -164,7 +164,7 @@ describe("get object data from chain", () => {
           name: "todd",
           value: null,
         },
-        "todd should be there"
+        "todd should be there",
       );
     });
   });
@@ -190,7 +190,7 @@ describe("get object data from chain", () => {
         {
           name: "todd",
         },
-        "todd should be there"
+        "todd should be there",
       );
     });
     it("should set an object value with template", () => {
@@ -218,7 +218,7 @@ describe("get object data from chain", () => {
           name: "todd",
           value: null,
         },
-        "todd should be there"
+        "todd should be there",
       );
     });
     it("should set a field with defaults and no defaults", () => {
@@ -255,7 +255,7 @@ describe("get object data from chain", () => {
           app_id_key_name: null,
           claims_to_roles: [],
         },
-        "it should set the value"
+        "it should set the value",
       );
     });
   });
@@ -268,7 +268,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testValue,
         { hi: "mom" },
-        "it should invoke callack with data"
+        "it should invoke callack with data",
       );
     });
   });
@@ -286,7 +286,7 @@ describe("get object data from chain", () => {
       };
       assert.throws(
         task,
-        "duplicate value for array friends at index name: gary"
+        "duplicate value for array friends at index name: gary",
       );
     });
     it("should throw an error with index and old value options", () => {
@@ -308,12 +308,12 @@ describe("get object data from chain", () => {
           {
             oldValue: "frog",
             index: "test",
-          }
+          },
         );
       };
       assert.throws(
         task,
-        "duplicate value for array friends at index test: test"
+        "duplicate value for array friends at index test: test",
       );
     });
     it("should throw an error with only old value options", () => {
@@ -333,12 +333,12 @@ describe("get object data from chain", () => {
           },
           {
             oldValue: "frog",
-          }
+          },
         );
       };
       assert.throws(
         task,
-        "duplicate value for array friends at index name: gary"
+        "duplicate value for array friends at index name: gary",
       );
     });
     it("should throw no error with no options", () => {
@@ -366,7 +366,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.friends[0].test,
         "thumbsup",
-        "it should change the value"
+        "it should change the value",
       );
     });
     it("should update a child with index", () => {
@@ -379,7 +379,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.friends[0].test,
         "thumbsup",
-        "it should change the value"
+        "it should change the value",
       );
     });
   });
@@ -393,7 +393,7 @@ describe("get object data from chain", () => {
       };
       assert.throws(
         task,
-        "revision.updateEachChild expects the child to be type Array got: string"
+        "revision.updateEachChild expects the child to be type Array got: string",
       );
     });
     it("should update all children", () => {
@@ -415,7 +415,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         splat(testData.friends, "high_score"),
         [null, null],
-        "it should update children"
+        "it should update children",
       );
     });
   });
@@ -445,7 +445,7 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.b[0].c[0].test,
         false,
-        "it should set to false"
+        "it should set to false",
       );
     });
     it("should update any arbitrary number of children", () => {
@@ -488,12 +488,12 @@ describe("get object data from chain", () => {
       assert.deepEqual(
         testData.a[1].b[1].c[0].test,
         false,
-        "it should set to false"
+        "it should set to false",
       );
       assert.deepEqual(
         testData.a[0].b[0].c[0].test,
         false,
-        "it should set to false"
+        "it should set to false",
       );
     });
   });
@@ -503,7 +503,7 @@ describe("get object data from chain", () => {
       let task = () => data.done();
       assert.throws(
         task,
-        "revision expected revision.setDoneCallback to be initialized before done is called"
+        "revision expected revision.setDoneCallback to be initialized before done is called",
       );
     });
     describe("setDoneCallback", () => {
