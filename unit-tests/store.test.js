@@ -740,6 +740,31 @@ describe("store", () => {
     });
   });
   describe("new state store functions - 1.11.0", () => {
+    describe("store.shouldDisableSave", () => {
+      it("should return boolean value for should disable save", () => {
+        let slz = new lazyZstate();
+        let invalidSpy = new sinon.spy();
+        let invalidTextSpy = new sinon.spy();
+        let updateSpy = new sinon.spy();
+        let updateFnSpy = new sinon.spy();
+        slz.updateFunctions.push(updateFnSpy);
+        slz.setUpdateCallback(updateSpy);
+        slz.newField("frog", {
+          init: () => {},
+          shouldDisableSave: () => {
+            return true;
+          },
+          schema: {
+            test: {
+              default: "frog",
+              invalid: invalidSpy,
+              invalidText: invalidTextSpy,
+            },
+          },
+        });
+        assert.isTrue(slz.frog.shouldDisableSave(), "it should return true");
+      });
+    });
     describe("store.schema", () => {
       it("should set invalid and invalidText when schema is added to new field", () => {
         let slz = new lazyZstate();
