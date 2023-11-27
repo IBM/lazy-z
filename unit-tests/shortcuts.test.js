@@ -161,7 +161,7 @@ describe("shortcuts", () => {
     });
     it("should return true if undefined", () => {
       assert.isTrue(
-        shortcuts.isNullOrEmptyString(undefined),
+        shortcuts.isNullOrEmptyString(undefined, true),
         "it should return true",
       );
     });
