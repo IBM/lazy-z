@@ -159,6 +159,12 @@ describe("shortcuts", () => {
         "it should return true",
       );
     });
+    it("should return true if undefined", () => {
+      assert.isTrue(
+        shortcuts.isNullOrEmptyString(undefined),
+        "it should return true",
+      );
+    });
     it("should return true if empty string", () => {
       assert.isTrue(shortcuts.isNullOrEmptyString(""), "it should return true");
     });
