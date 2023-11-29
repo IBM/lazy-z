@@ -774,12 +774,13 @@ describe("store", () => {
           init: () => {},
           schema: {
             test: {
-              default: "frog",
+              default: false,
               invalid: invalidSpy,
               invalidText: invalidTextSpy,
             },
           },
         });
+        assert.isFalse(slz.frog.test.default, "it should set value to false");
         slz.frog.test.invalid();
         slz.frog.test.invalidText();
         assert.isTrue(
