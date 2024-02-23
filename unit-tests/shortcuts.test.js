@@ -147,6 +147,12 @@ describe("shortcuts", () => {
       let actualData = isIpv4CidrOrAddress("258.0.0.0/8");
       assert.isFalse(actualData, "it should be false");
     });
+    it("should return true if ipv4 cidr address", () => {
+      assert.isTrue(
+        isIpv4CidrOrAddress("131.239.211.196"),
+        "it should be true",
+      );
+    });
     it("should return true if ipv4 address", () => {
       let actualData = isIpv4CidrOrAddress("1.2.3.4");
       assert.isTrue(actualData, "it should be true");

@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.11.17 
+- Fixed an issue causing some valid CIDR ranges to incorrectly not return true in the `isIpv4OrCidr` function.
+
 ## 1.10.8
 - Added Method
   - `deepCopyArrayOfObjects`
