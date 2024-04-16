@@ -11,6 +11,7 @@ const {
   allFieldsNull,
   splatContains,
   nullOrEmptyStringFields,
+  recursiveTranspose,
 } = require("../lib/objects");
 
 describe("objects", () => {
@@ -263,6 +264,123 @@ describe("objects", () => {
           "it should be false",
         );
       });
+    });
+  });
+  describe("recursiveTranspose", () => {
+    it("should update string, boolean, and number values found on both source and destination", () => {
+      let source = {
+        frog: 3,
+        toad: "yes",
+        friends: true,
+      };
+      let destination = {};
+
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should set a value on destination object", () => {
+      let source = { frog: true };
+      let destination = {};
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should set a value on destination object", () => {
+      let source = {
+        frog: {
+          toad: true,
+        },
+      };
+      let destination = {
+        frog: {},
+      };
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should set a value on destination array of objects", () => {
+      let source = {
+        frog: [
+          {
+            name: "hello",
+          },
+          {
+            name: "world",
+          },
+        ],
+      };
+      let destination = {
+        frog: [{}, {}],
+      };
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should add unfound objects", () => {
+      let source = {
+        frog: [
+          {
+            name: "hello",
+          },
+          {
+            name: "world",
+          },
+          {
+            name: "toad",
+          },
+        ],
+      };
+      let destination = {
+        frog: [{}, {}],
+      };
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should remove deleted objects", () => {
+      let source = {
+        frog: [
+          {
+            name: "hello",
+          },
+          {
+            name: "world",
+          },
+        ],
+      };
+      let destination = {
+        frog: [
+          {
+            name: "hello",
+          },
+          {
+            name: "world",
+          },
+          {
+            name: "toad",
+          },
+        ],
+      };
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should update an array of strings", () => {
+      let source = {
+        frog: ["1", "2", "3", "4"],
+      };
+      let destination = {
+        frog: ["4", "5", "6", "7"],
+      };
+
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
+    });
+    it("should update an array of strings and reduce", () => {
+      let source = {
+        frog: ["1", "2", "3"],
+      };
+      let destination = {
+        frog: ["1", "5", "3", "7"],
+      };
+
+      recursiveTranspose(source, destination);
+      assert.deepEqual(source, destination, "it should set values of object");
     });
   });
 });
