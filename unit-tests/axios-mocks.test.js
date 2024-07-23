@@ -1,5 +1,5 @@
-const { assert } = require("chai");
-const { initMockAxios } = require("../lib/axios-mocks");
+import { assert } from "chai";
+import { initMockAxios } from "../lib/axios-mocks.js";
 
 describe("axios", () => {
   describe("main function", () => {
