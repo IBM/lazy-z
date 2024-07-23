@@ -1,6 +1,6 @@
-const { assert } = require("chai");
-const utils = require("../lib/strings");
-const { prettyJSON } = require("../lib/shortcuts");
+import { assert } from "chai";
+import * as utils from "../lib/strings.js";
+import { prettyJSON } from "../lib/shortcuts.js";
 
 describe("string functions", () => {
   describe("remove trailing spaces", () => {

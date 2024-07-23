@@ -1,7 +1,7 @@
-const { assert } = require("chai");
-const sinon = require("sinon");
-const { isFunction } = require("../lib/shortcuts");
-const { createStore, lazyZstate, storeTemplate } = require("../lib/store");
+import { assert } from "chai";
+import sinon from "sinon";
+import { isFunction } from "../lib/shortcuts.js";
+import { createStore, lazyZstate, storeTemplate } from "../lib/store.js";
 
 describe("store", () => {
   describe("createStore", () => {

@@ -1,5 +1,5 @@
-const { assert } = require("chai");
-const { formatCidrBlock, buildNetworkingRule } = require("../lib/networking");
+import { assert } from "chai";
+import { formatCidrBlock, buildNetworkingRule } from "../lib/networking.js";
 
 describe("networking", () => {
   describe("formatCidrBlock", () => {
