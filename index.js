@@ -1,8 +1,28 @@
-module.exports = {
+import {
+  capitalize,
+  getLongestKey,
+  matchLength,
+  removeTrailingSpaces,
+  stringify,
+  kebabCase,
+  snakeCase,
+  camelCase,
+  titleCase,
+} from "./lib/strings.js";
+
+export default {
   ...require("./lib/cli-utils"),
   ...require("./lib/shortcuts"),
   ...require("./lib/values"),
-  ...require("./lib/strings"),
+  capitalize,
+  getLongestKey,
+  matchLength,
+  removeTrailingSpaces,
+  stringify,
+  kebabCase,
+  snakeCase,
+  camelCase,
+  titleCase,
   ...require("./lib/encode"),
   ...require("./lib/objects"),
   ...require("./lib/revision"),

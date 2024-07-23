@@ -1,5 +1,5 @@
-const { assert } = require("chai");
-const {
+import { assert } from "chai";
+import {
   transpose,
   spreadKeyValues,
   splat,
@@ -12,7 +12,7 @@ const {
   splatContains,
   nullOrEmptyStringFields,
   recursiveTranspose,
-} = require("../lib/objects");
+} from "../lib/objects.js";
 
 describe("objects", () => {
   describe("transpose", () => {
