@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0
+
+### Features
+
+- `lazy-z` now uses ES6 modules and should now be more compatable with `import` syntax
+- `titleCase` now accepts a second argument, `ignoreWords` an array of string. These words will be ignored when converting into titleCase.
+
+### Fixes
+
+### Upgrade Notes
+
+ 
+
 ## 1.11.17 
 - Fixed an issue causing some valid CIDR ranges to incorrectly not return true in the `isIpv4OrCidr` function.
 

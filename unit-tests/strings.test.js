@@ -215,6 +215,13 @@ describe("string functions", () => {
         "it should return correct case",
       );
     });
+    it("should return string with number", () => {
+      assert.deepEqual(
+        utils.titleCase(`what is the world at large at`, ["the", "at"]),
+        "What Is the World at Large at",
+        "it should return correct case",
+      );
+    });
     it("should return an empty string if not found", () => {
       assert.deepEqual(
         utils.titleCase(false),
