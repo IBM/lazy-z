@@ -1,6 +1,6 @@
-const { assert } = require("chai");
-const { splat } = require("../lib/objects");
-const { revision } = require("../lib/revision");
+import { assert } from "chai";
+import { splat } from "../lib/objects.js";
+import { revision } from "../lib/revision.js";
 
 describe("get object data from chain", () => {
   it("should get data from child", () => {

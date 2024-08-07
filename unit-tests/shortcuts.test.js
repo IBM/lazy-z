@@ -1,10 +1,35 @@
-const { assert } = require("chai");
-const shortcuts = require("../lib/shortcuts");
+import { assert } from "chai";
+import {
+  azObjectSort,
+  azsort,
+  contains,
+  containsKeys,
+  distinct,
+  eachKey,
+  isArray,
+  isBoolean,
+  isEmpty,
+  isFunction,
+  isIpv4CidrOrAddress,
+  isString,
+  isWholeNumber,
+  keys,
+  keyValueType,
+  objectAtFirstKey,
+  prettyJSON,
+  validIpv4Test,
+  isNullOrEmptyString,
+  deepEqual,
+  numberToZoneList,
+  eachZone,
+  parseIntFromZone,
+  buildNumberDropdownList,
+  isArrayOfObjects,
+} from "../lib/shortcuts.js";
 
 describe("shortcuts", () => {
   describe("keys", () => {
     it("should return correct keys", () => {
-      let keys = shortcuts.keys;
       assert.deepEqual(
         keys({ test: true }),
         ["test"],
@@ -13,7 +38,6 @@ describe("shortcuts", () => {
     });
   });
   describe("containsKeys", () => {
-    let containsKeys = shortcuts.containsKeys;
     it("should return true if key exists in object", () => {
       assert.isTrue(containsKeys({ test: true }, "test"));
     });
@@ -25,7 +49,6 @@ describe("shortcuts", () => {
     });
   });
   describe("contains", () => {
-    let contains = shortcuts.contains;
     it("should return true if string in string", () => {
       assert.isTrue(contains("test", "es"), "should be true");
     });
@@ -40,7 +63,6 @@ describe("shortcuts", () => {
     });
   });
   describe("eachKey", () => {
-    let eachKey = shortcuts.eachKey;
     it("should correctly run eachKey", () => {
       let testData = [];
       eachKey({ test: "test" }, (key) => testData.push(key));
@@ -49,48 +71,47 @@ describe("shortcuts", () => {
   });
   describe("azsort", () => {
     it("should return -1 if string a is less than string b", () => {
-      let actualData = shortcuts.azsort("a", "b");
+      let actualData = azsort("a", "b");
       assert.deepEqual(actualData, -1, "it should return -1");
     });
     it("should return 1 if string a is greater than string b", () => {
-      let actualData = shortcuts.azsort(3, 2);
+      let actualData = azsort(3, 2);
       assert.deepEqual(actualData, 1, "it should return 11");
     });
     it("should return 0 if string a is equal to string b", () => {
-      let actualData = shortcuts.azsort(2, 2);
+      let actualData = azsort(2, 2);
       assert.deepEqual(actualData, 0, "it should return 11");
     });
   });
   describe("azObjectSort", () => {
     it("should return -1 if key in object a is less than key in object b", () => {
-      let actualData = shortcuts.azObjectSort({ id: 1 }, { id: 2 }, "id");
+      let actualData = azObjectSort({ id: 1 }, { id: 2 }, "id");
       assert.deepEqual(actualData, -1, "it should return -1");
     });
     it("should return 1 if key in object a is greater than key in object b", () => {
-      let actualData = shortcuts.azObjectSort({ id: 2 }, { id: 1 }, "id");
+      let actualData = azObjectSort({ id: 2 }, { id: 1 }, "id");
       assert.deepEqual(actualData, 1, "it should return 1");
     });
     it("should return 0 if key in object a is equal to key in object b", () => {
-      let actualData = shortcuts.azObjectSort({ id: 2 }, { id: 2 }, "id");
+      let actualData = azObjectSort({ id: 2 }, { id: 2 }, "id");
       assert.deepEqual(actualData, 0, "it should return 0");
     });
   });
   describe("distinct", () => {
     it("should remove duplicate string entries from an array of strings", () => {
       let expectedData = ["hi"];
-      let actualData = shortcuts.distinct(["hi", "hi"]);
+      let actualData = distinct(["hi", "hi"]);
       assert.deepEqual(actualData, expectedData, "it should return array");
     });
   });
   describe("isEmpty", () => {
-    let isEmpty = shortcuts.isEmpty;
     it("should return false if not empty", () => {
       assert.deepEqual(isEmpty(["test"]), false, "should return correct keys");
     });
   });
   describe("objectAtFirstKey", () => {
     it("should return the object", () => {
-      let actualData = shortcuts.objectAtFirstKey({
+      let actualData = objectAtFirstKey({
         sub_obj: {
           one: "one",
         },
@@ -100,7 +121,7 @@ describe("shortcuts", () => {
   });
   describe("keyValueType", () => {
     it("should return the object key type", () => {
-      let actualData = shortcuts.keyValueType(
+      let actualData = keyValueType(
         {
           sub_obj: {
             one: "one",
@@ -112,7 +133,6 @@ describe("shortcuts", () => {
     });
   });
   describe("isString", () => {
-    let isString = shortcuts.isString;
     it("should return true if string", () => {
       assert.isTrue(isString("string"));
     });
@@ -121,7 +141,6 @@ describe("shortcuts", () => {
     });
   });
   describe("isBoolean", () => {
-    let isBoolean = shortcuts.isBoolean;
     it("should return true if boolean", () => {
       assert.isTrue(isBoolean(true));
     });
@@ -130,7 +149,6 @@ describe("shortcuts", () => {
     });
   });
   describe("isIpv4CidrOrAddress", () => {
-    let isIpv4CidrOrAddress = shortcuts.isIpv4CidrOrAddress;
     it("should return true if ipv4 cidr block", () => {
       let actualData = isIpv4CidrOrAddress("99.145.206.21");
       assert.isTrue(actualData, "it should be true");
@@ -164,23 +182,19 @@ describe("shortcuts", () => {
   });
   describe("isNullOrEmptyString", () => {
     it("should return true if null", () => {
-      assert.isTrue(
-        shortcuts.isNullOrEmptyString(null),
-        "it should return true",
-      );
+      assert.isTrue(isNullOrEmptyString(null), "it should return true");
     });
     it("should return true if undefined", () => {
       assert.isTrue(
-        shortcuts.isNullOrEmptyString(undefined, true),
+        isNullOrEmptyString(undefined, true),
         "it should return true",
       );
     });
     it("should return true if empty string", () => {
-      assert.isTrue(shortcuts.isNullOrEmptyString(""), "it should return true");
+      assert.isTrue(isNullOrEmptyString(""), "it should return true");
     });
   });
   describe("validIpv4Test", () => {
-    let validIpv4Test = shortcuts.validIpv4Test;
     it("should throw an error if address is invalid", () => {
       let task = () => {
         validIpv4Test("test", "honk");
@@ -200,18 +214,17 @@ describe("shortcuts", () => {
   describe("isFunction", () => {
     it("should return true if a function", () => {
       assert.isTrue(
-        shortcuts.isFunction(() => {}),
+        isFunction(() => {}),
         "it should be",
       );
     });
   });
   describe("isArray", () => {
     it("should return true if array", () => {
-      assert.isTrue(shortcuts.isArray([]), "it should be");
+      assert.isTrue(isArray([]), "it should be");
     });
   });
   describe("deepEqual", () => {
-    let deepEqual = shortcuts.deepEqual;
     it("should return false if two data types passed in do not match", () => {
       assert.isFalse(deepEqual(2, "hi"), "it should be false");
     });
@@ -384,16 +397,16 @@ describe("shortcuts", () => {
   });
   describe("isWholeNumber", () => {
     it("should return true for whole number", () => {
-      assert.isTrue(shortcuts.isWholeNumber(1), "it should be true");
+      assert.isTrue(isWholeNumber(1), "it should be true");
     });
     it("should return false for not whole number", () => {
-      assert.isFalse(shortcuts.isWholeNumber(1.2), "it should be false");
+      assert.isFalse(isWholeNumber(1.2), "it should be false");
     });
   });
   describe("numberToZoneList", () => {
     it("should return correct zones", () => {
       let expectedData = ["zone-1", "zone-2", "zone-3"];
-      let actualData = shortcuts.numberToZoneList(3);
+      let actualData = numberToZoneList(3);
       assert.deepEqual(
         actualData,
         expectedData,
@@ -405,7 +418,7 @@ describe("shortcuts", () => {
     it("should run the callback for each zone", () => {
       let expectedData = ["zone-1", "zone-2", "zone-3"];
       let actualData = [];
-      shortcuts.eachZone(3, (zone) => actualData.push(zone));
+      eachZone(3, (zone) => actualData.push(zone));
       assert.deepEqual(
         actualData,
         expectedData,
@@ -414,14 +427,14 @@ describe("shortcuts", () => {
     });
     it("should run the callback for each zone", () => {
       let actualData = [];
-      shortcuts.eachZone(0, (zone) => actualData.push(zone));
+      eachZone(0, (zone) => actualData.push(zone));
       assert.deepEqual(actualData, [], "it should return correct zones");
     });
   });
   describe("parseIntFromZone", () => {
     it("should parse int from zone", () => {
       let expectedData = 3;
-      let actualData = shortcuts.parseIntFromZone("test-zone-3");
+      let actualData = parseIntFromZone("test-zone-3");
       assert.deepEqual(
         actualData,
         expectedData,
@@ -432,14 +445,14 @@ describe("shortcuts", () => {
   describe("buildNumberDropdownList", () => {
     it("should return list with no add", () => {
       assert.deepEqual(
-        shortcuts.buildNumberDropdownList(2),
+        buildNumberDropdownList(2),
         ["0", "1"],
         "it should return list",
       );
     });
     it("should return list with add", () => {
       assert.deepEqual(
-        shortcuts.buildNumberDropdownList(2, 1),
+        buildNumberDropdownList(2, 1),
         ["1", "2"],
         "it should return list",
       );
@@ -447,13 +460,13 @@ describe("shortcuts", () => {
   });
   describe("isArrayOfObjects", () => {
     it("should return true if array of objects", () => {
-      assert.isTrue(shortcuts.isArrayOfObjects([{}, {}]), "it should be true");
+      assert.isTrue(isArrayOfObjects([{}, {}]), "it should be true");
     });
     it("should return false if not array of objects", () => {
-      assert.isFalse(shortcuts.isArrayOfObjects([]), "it should be true");
+      assert.isFalse(isArrayOfObjects([]), "it should be true");
     });
     it("should return false if not array of objects", () => {
-      assert.isFalse(shortcuts.isArrayOfObjects(), "it should be true");
+      assert.isFalse(isArrayOfObjects(), "it should be true");
     });
   });
 });

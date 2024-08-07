@@ -1,6 +1,6 @@
-const { assert } = require("chai");
-const utils = require("../lib/strings");
-const { prettyJSON } = require("../lib/shortcuts");
+import { assert } from "chai";
+import * as utils from "../lib/strings.js";
+import { prettyJSON } from "../lib/shortcuts.js";
 
 describe("string functions", () => {
   describe("remove trailing spaces", () => {
@@ -212,6 +212,13 @@ describe("string functions", () => {
       assert.deepEqual(
         utils.titleCase(`string-value-1`),
         "String Value 1",
+        "it should return correct case",
+      );
+    });
+    it("should return string with number", () => {
+      assert.deepEqual(
+        utils.titleCase(`what is the world at large at`, ["the", "at"]),
+        "What Is the World at Large at",
         "it should return correct case",
       );
     });

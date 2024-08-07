@@ -1,12 +1,12 @@
-const { assert } = require("chai");
-const {
+import { assert } from "chai";
+import {
   isInRange,
   validPortRange,
   areNotWholeNumbers,
   haveValidRanges,
   portRangeInvalid,
   rangeInvalid,
-} = require("../lib/numbers");
+} from "../lib/numbers.js";
 
 describe("number methods", () => {
   describe("isInRange", () => {

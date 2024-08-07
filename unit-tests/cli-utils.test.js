@@ -1,12 +1,16 @@
-const { assert } = require("chai");
-const utils = require("../lib/cli-utils");
-const overrideJson = require("./data-files/override.json");
+import { assert } from "chai";
+import {
+  flagTest,
+  flagValues,
+  getVerbActions,
+  replaceOptionalFlags,
+} from "../lib/cli-utils.js";
 
 describe("cli utils", () => {
   describe("flagTest", () => {
     it("should throw an error if duplicate flags are found", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "help",
           {
             "-h": "--help",
@@ -20,7 +24,7 @@ describe("cli utils", () => {
     });
     it("should throw an error if a flag is used with a synonym multiple times", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "help",
           {
             "-h": "--help",
@@ -34,7 +38,7 @@ describe("cli utils", () => {
     });
     it("should throw an error if a flag is not found in aliases", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "help",
           {
             "-h": "--help",
@@ -48,7 +52,7 @@ describe("cli utils", () => {
     });
     it("should not throw an error if reading an argument that does not have at least one hyphen", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "help",
           {
             "--in": "-i",
@@ -62,7 +66,7 @@ describe("cli utils", () => {
     });
     it("should throw an error if all needed flags are not provided", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "help",
           { "--in": "-i", "-i": "--in", "-o": "--out", "--out": "-o" },
           "--in",
@@ -73,9 +77,9 @@ describe("cli utils", () => {
     });
     it("should not throw an error if an optional flag is passed", () => {
       let task = () => {
-        utils.flagTest(
+        flagTest(
           "plan",
-          utils.getVerbActions(
+          getVerbActions(
             {
               requiredFlags: ["in", "out", "type"],
               optionalFlags: [
@@ -127,7 +131,7 @@ describe("cli utils", () => {
         "-t": "--type",
         "--type": "-t",
       };
-      let actualData = utils.getVerbActions(plan, tags);
+      let actualData = getVerbActions(plan, tags);
       assert.deepEqual(expectedData, actualData, "should return correct data");
     });
     it("should remove optional flags with no needed key values", () => {
@@ -168,7 +172,7 @@ describe("cli utils", () => {
         "?*-v": "?*--tf-var",
         "?*--tf-var": "?*-v",
       };
-      let actualData = utils.getVerbActions(plan, tags);
+      let actualData = getVerbActions(plan, tags);
       assert.deepEqual(expectedData, actualData, "should return correct data");
     });
     it("should return correct alias map for a verb with optional tags", () => {
@@ -198,13 +202,13 @@ describe("cli utils", () => {
         "?-v": "?--tf-var",
         "?--tf-var": "?-v",
       };
-      let actualData = utils.getVerbActions(plan, tags);
+      let actualData = getVerbActions(plan, tags);
       assert.deepEqual(expectedData, actualData, "should return correct data");
     });
   });
   describe("replaceOptionalFlags", () => {
     it("should return command if none optional flags", () => {
-      let actualData = utils.replaceOptionalFlags(
+      let actualData = replaceOptionalFlags(
         { requiredFlags: ["one"] },
         {},
         "hi",
@@ -212,7 +216,7 @@ describe("cli utils", () => {
       assert.deepEqual(actualData, ["hi"], "it should return commands");
     });
     it("should replace optional flags that do not accept multiple arguments", () => {
-      let actualData = utils.replaceOptionalFlags(
+      let actualData = replaceOptionalFlags(
         {
           optionalFlags: [
             {
@@ -236,7 +240,7 @@ describe("cli utils", () => {
   });
   describe("flagValues", () => {
     it("should return key value pair of flag values", () => {
-      let actualData = utils.flagValues(
+      let actualData = flagValues(
         "plan",
         {
           requiredFlags: ["in", "out", "type"],
@@ -281,7 +285,7 @@ describe("cli utils", () => {
         tfvars: ["testVar1=true", 'testVar2="true"'],
         shallow: true,
       };
-      let actualData = utils.flagValues(
+      let actualData = flagValues(
         "plan",
         {
           requiredFlags: ["in", "out", "type"],
@@ -334,7 +338,7 @@ describe("cli utils", () => {
           },
         ],
       };
-      let actualData = utils.flagValues(
+      let actualData = flagValues(
         "breakglass",
         action,
         tags,
@@ -374,7 +378,7 @@ describe("cli utils", () => {
           },
         ],
       };
-      let actualData = utils.flagValues(
+      let actualData = flagValues(
         "breakglass",
         action,
         tags,

@@ -1,7 +1,10 @@
-const { hclEncode } = require("../lib/encode");
-const { assert } = require("chai");
-const overrideJson = require("./data-files/override.json");
-const fs = require("fs");
+import { hclEncode } from "../lib/encode.js";
+import { assert } from "chai";
+import fs from "fs";
+
+const overrideJson = JSON.parse(
+  fs.readFileSync("./unit-tests/data-files/override.json"),
+);
 
 describe("encode", () => {
   describe("hclEncode", () => {

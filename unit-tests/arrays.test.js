@@ -1,12 +1,12 @@
-const { assert } = require("chai");
-const {
+import { assert } from "chai";
+import {
   flatten,
   numberStringList,
   nestedSplat,
   deleteUnfoundArrayItems,
   anyAreEmpty,
   deepCopyArrayOfObjects,
-} = require("../lib/arrays");
+} from "../lib/arrays.js";
 
 describe("arrays", () => {
   describe("flatten", () => {
